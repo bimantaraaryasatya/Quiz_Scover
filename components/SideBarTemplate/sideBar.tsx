@@ -1,0 +1,245 @@
+"use client"
+
+import { ReactNode, useState, useEffect } from "react"
+import Image from "next/image"
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { IoLogOutOutline } from "react-icons/io5";
+import MenuItem from "./menuItem"
+import { useRouter } from "next/navigation"
+import ScoverLogo from "@/public/images/scover_logo1.png"
+import { getCookie, removeCookie } from "@/lib/client-cookies"
+import { jwtDecode } from "jwt-decode"
+import { ToastContainer, toast } from "react-toastify"
+import { get } from "@/lib/api-bridge"
+import { BASE_API_URL } from "@/global"
+import { FaRegUserCircle } from "react-icons/fa";
+
+type MenuType = {
+  id: string
+  icon: ReactNode
+  path: string
+  label: string
+  category: "dashboard" | "communication" | "settings"
+}
+
+type ManagerProp = {
+  children: ReactNode
+  id: string
+  title: string
+  menuList: MenuType[]    
+}
+
+const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
+  const [isCollapsed, setIsCollapsed] = useState(true)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  // const [user, setUser] = useState<IUser | null>(null)
+  // const [ownerKos, setOwnerKos] = useState<IKos | null>(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    let touchStartX = 0
+    let touchEndX = 0
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.changedTouches[0].screenX
+    }
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      touchEndX = e.changedTouches[0].screenX
+      handleGesture()
+    }
+
+    const handleGesture = () => {
+      if (touchEndX - touchStartX > 80) {
+        setIsMobileOpen(true)
+      }
+
+      if (touchStartX - touchEndX > 80) {
+        setIsMobileOpen(false)
+      }
+    }
+
+    window.addEventListener("touchstart", handleTouchStart)
+    window.addEventListener("touchend", handleTouchEnd)
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart)
+      window.removeEventListener("touchend", handleTouchEnd)
+    }
+  }, [])
+
+  useEffect(() => {
+    const TOKEN = getCookie("token")
+    if (!TOKEN) return
+
+    try {
+      // const decoded: IUser = jwtDecode(TOKEN)
+      // setUser(decoded)
+    } catch (error) {
+      console.error("Failed to decode token:", error)
+    }
+  }, [])
+
+  // useEffect(() => {
+    // if (!user || user.role !== "owner") return
+
+    const fetchOwnerKos = async () => {
+      try {
+        const res = await get(`${BASE_API_URL}/kos`)
+        if (res?.data?.status) {
+          // const kosList: IKos[] = res.data.data
+          // const myKos = kosList.find(kos => kos.user_id === user.id)
+          // setOwnerKos(myKos || null)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchOwnerKos()
+  // }, [user])
+
+  const handleLogout = () => {
+    removeCookie("token")
+    removeCookie("id")
+    removeCookie("name")
+    removeCookie("email")
+    removeCookie("phone")
+    removeCookie("role")
+
+    toast("Logout is successful", {
+      hideProgressBar: true,
+      containerId: "toastSideBar",
+      type: "success",
+      autoClose: 1000,
+    })
+
+    setTimeout(() => router.replace("/login"), 2000)
+  }
+
+  const groupedMenu = menuList.reduce((acc, menu) => {
+    if (!acc[menu.category]) {
+      acc[menu.category] = []
+    }
+    acc[menu.category].push(menu)
+    return acc
+  }, {} as Record<string, MenuType[]>)
+
+  return (
+    <div className="min-h-screen flex bg-slate-50">
+      <ToastContainer containerId="toastSideBar" />
+      <aside
+        className={`
+          fixed top-0 left-0 min-h-screen bg-white border-r border-[#E8E8E8]
+          flex flex-col justify-between
+          transition-all duration-300 z-50
+          ${isCollapsed ? "w-20" : "w-72"}
+          // Desktop
+          md:translate-x-0
+
+          // Mobile
+          ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
+          md:static
+        `}
+      >
+        <div>
+          {/* Toggle */}
+          <div className={`flex gap-6 ${isCollapsed ? "justify-center, flex-col-reverse" : "justify-between"} p-4`}>
+            <div className='flex'>
+              <div className="flex flex-row items-center">
+                <Image src={ScoverLogo} alt="Scover Logo" width={50} height={50} />
+                {!isCollapsed && (
+                <h1 className="ml-2 text-md font-semibold text-text">Scover Malang</h1>
+                )}
+              </div>
+            </div>
+            <div className={`flex ${isCollapsed ? "justify-center" : "justify-end"}`}>
+              <button className="text-gray-500" onClick={() => setIsCollapsed(!isCollapsed)}>
+                {isCollapsed ? (
+                  <IoIosArrowForward className="text-xl text-text" />
+                ) : (
+                  <IoIosArrowBack className="text-xl text-text" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Menu */}
+          <nav className="mt-6 px-4 flex flex-col gap-6">
+
+            {Object.entries(groupedMenu).map(([category, menus]) => (
+              <div key={category}>
+                
+                {!isCollapsed && (
+                  <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wider">
+                    {category}
+                  </p>
+                )}
+
+                <div className="flex flex-col gap-2">
+                  {menus.map(menu => (
+                    <MenuItem
+                      key={menu.id}
+                      icon={menu.icon}
+                      label={!isCollapsed ? menu.label : ""}
+                      path={menu.path}
+                      active={menu.id === id}
+                      collapsed={isCollapsed}
+                    />
+                  ))}
+                </div>
+
+              </div>
+            ))}
+
+          </nav>
+        </div>
+        <div className="p-4">
+          <button className="flex  justify-center text-center gap-2 px-4 w-full py-2 border rounded-md border-[#E8E8E8] cursor-pointer hover:bg-red-50" onClick={handleLogout}>
+            <span className="flex items-center text-xl text-red-500"><IoLogOutOutline/></span>
+            {!isCollapsed && (
+            <span className="text-red-500">Logout</span>
+            )}
+          </button>
+        </div>
+      </aside>
+      {/* RIGHT SIDE WRAPPER */}
+      <div className="flex-1 flex flex-col">
+
+        {/* HEADER */}
+        <header className="sticky top-0 z-40 flex justify-between items-center px-10 h-20 bg-white border-b border-[#E8E8E8]">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            {title}
+          </h1>
+
+          {/* Dummy User */}
+          <div className="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
+            <FaRegUserCircle className="text-3xl text-gray-600" />
+            <div className="leading-tight">
+              <p className="font-semibold text-sm text-gray-800">
+                Scover Admin
+              </p>
+              <p className="text-xs text-gray-500">
+                Super Admin
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {/* CONTENT */}
+        <main className="flex-1 p-10">
+          {children}
+        </main>
+      </div>
+      {isMobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 z-40 md:hidden"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
+    </div>
+  )
+}
+
+export default Sidebar
