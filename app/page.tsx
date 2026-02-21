@@ -17,8 +17,8 @@ export default function Home() {
           <MainButton className="w-fit" type="submit" onClick={() => router.push("/testing")}>
             <p>Check Dashboard</p>
           </MainButton>
-          <ActiveButton className="w-fit" type="submit" onClick={() => alert("Button clicked!")}>
-            <p>Active</p>
+          <ActiveButton className="w-fit" type="submit" onClick={() => router.push("/admin/home")}>
+            <p>Admin Dashboard</p>
           </ActiveButton>
           <SubmitButton className="w-fit" type="submit" onClick={() => alert("Button clicked!")}>
             <p>Submit</p>
