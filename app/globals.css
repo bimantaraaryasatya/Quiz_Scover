@@ -10,6 +10,20 @@
   --color-secondary: #FAD136;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0D4669 !important;
+  caret-color: #0D4669;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
