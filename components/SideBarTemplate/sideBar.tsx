@@ -208,14 +208,14 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
       <div className="flex-1 flex flex-col">
 
         {/* HEADER */}
-        <header className="sticky top-0 z-40 flex justify-between items-center px-10 h-20 bg-white border-b border-[#E8E8E8]">
-          <h1 className="text-2xl font-semibold text-gray-800">
+        <header className="sticky top-0 z-40 flex justify-between items-center px-5 md:px-10 h-20 bg-white border-b border-[#E8E8E8]">
+          <h1 className="text-xl md:text-2xl font-semibold text-gray-800">
             {title}
           </h1>
 
           {/* Dummy User */}
           <div className="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
-            <FaRegUserCircle className="text-3xl text-gray-600" />
+            <FaRegUserCircle className="text-2xl md:text-3xl text-gray-600" />
             <div className="leading-tight">
               <p className="font-semibold text-sm text-gray-800">
                 Scover Admin
@@ -228,7 +228,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
         </header>
 
         {/* CONTENT */}
-        <main className="flex-1 p-10">
+        <main className="flex-1 p-5 md:p-10">
           {children}
         </main>
       </div>

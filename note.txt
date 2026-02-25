@@ -1,0 +1,5 @@
+Library that must be downloaded: 
+1. Js Cookie
+2. Toastify
+3. Axios
+4. React Icons
