@@ -127,50 +127,49 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
   }, {} as Record<string, MenuType[]>)
 
   return (
-    <div className="min-h-screen flex bg-slate-50">
+    <div className="min-h-screen md:h-screen flex bg-slate-50 md:overflow-hidden">
       <ToastContainer containerId="toastSideBar" />
       <aside
         className={`
-          fixed top-0 left-0 min-h-screen bg-white border-r border-[#E8E8E8]
-          flex flex-col justify-between
+          fixed md:sticky top-0 h-screen
+          bg-white border-r border-[#E8E8E8]
+          flex flex-col
           transition-all duration-300 z-50
           ${isCollapsed ? "w-20" : "w-72"}
-          // Desktop
-          md:translate-x-0
-
-          // Mobile
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
-          md:static
+          md:translate-x-0
         `}
       >
-        <div>
-          {/* Toggle */}
-          <div className={`flex gap-6 ${isCollapsed ? "justify-center, flex-col-reverse" : "justify-between"} p-4`}>
-            <div className='flex'>
-              <div className="flex flex-row items-center">
-                <Image src={ScoverLogo} alt="Scover Logo" width={50} height={50} />
-                {!isCollapsed && (
-                <h1 className="ml-2 text-md font-semibold text-text">Scover Malang</h1>
-                )}
-              </div>
+        {/* TOP: Logo + Toggle */}
+        <div className="p-4">
+          <div className={`flex gap-6 ${isCollapsed ? "justify-center, flex-col-reverse" : "justify-between"}`}>
+            <div className="flex items-center">
+              <Image src={ScoverLogo} alt="Scover Logo" width={50} height={50} />
+              {!isCollapsed && (
+                <h1 className="ml-2 text-md font-semibold text-text">
+                  Scover Malang
+                </h1>
+              )}
             </div>
-            <div className={`flex ${isCollapsed ? "justify-center" : "justify-end"}`}>
-              <button className="text-gray-500" onClick={() => setIsCollapsed(!isCollapsed)}>
-                {isCollapsed ? (
-                  <IoIosArrowForward className="text-xl text-text" />
-                ) : (
-                  <IoIosArrowBack className="text-xl text-text" />
-                )}
-              </button>
-            </div>
+
+            <button
+              className="text-gray-500 flex items-center justify-center"
+              onClick={() => setIsCollapsed(!isCollapsed)}
+            >
+              {isCollapsed ? (
+                <IoIosArrowForward className="text-xl text-text" />
+              ) : (
+                <IoIosArrowBack className="text-xl text-text" />
+              )}
+            </button>
           </div>
+        </div>
 
-          {/* Menu */}
-          <nav className="mt-6 px-4 flex flex-col gap-6">
-
+        {/* MIDDLE: SCROLLABLE MENU */}
+        <div className="flex-1 overflow-y-auto px-4">
+          <nav className="mt-6 flex flex-col gap-6 pb-6">
             {Object.entries(groupedMenu).map(([category, menus]) => (
               <div key={category}>
-                
                 {!isCollapsed && (
                   <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wider">
                     {category}
@@ -189,23 +188,28 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
                     />
                   ))}
                 </div>
-
               </div>
             ))}
-
           </nav>
         </div>
-        <div className="p-4">
-          <button className="flex  justify-center text-center gap-2 px-4 w-full py-2 border rounded-md border-[#E8E8E8] cursor-pointer hover:bg-red-50" onClick={handleLogout}>
-            <span className="flex items-center text-xl text-red-500"><IoLogOutOutline/></span>
+
+        {/* BOTTOM: LOGOUT (FIXED BAWAH) */}
+        <div className="p-4 border-t border-[#E8E8E8]">
+          <button
+            className="flex justify-center gap-2 px-4 w-full py-2 border rounded-md border-[#E8E8E8] hover:bg-red-50"
+            onClick={handleLogout}
+          >
+            <span className="flex items-center text-xl text-red-500">
+              <IoLogOutOutline />
+            </span>
             {!isCollapsed && (
-            <span className="text-red-500">Logout</span>
+              <span className="text-red-500">Logout</span>
             )}
           </button>
         </div>
       </aside>
       {/* RIGHT SIDE WRAPPER */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col md:h-screen">
 
         {/* HEADER */}
         <header className="sticky top-0 z-40 flex justify-between items-center px-5 md:px-10 h-20 bg-white border-b border-[#E8E8E8]">
@@ -228,7 +232,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
         </header>
 
         {/* CONTENT */}
-        <main className="flex-1 p-5 md:p-10">
+        <main className="flex-1 p-5 md:p-10 md:overflow-y-auto">
           {children}
         </main>
       </div>

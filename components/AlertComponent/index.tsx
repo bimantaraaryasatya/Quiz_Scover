@@ -6,7 +6,7 @@ type Props = {
 }
 
 export const WarningAlert = ({children, title}: Props) => {
-
+    
 }
 
 export const SuccessAlert = ({children, title}: Props) => {
