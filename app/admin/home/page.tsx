@@ -5,7 +5,7 @@ import Icon_Dashboard from "@/public/images/Icon_Dashboard.png"
 import Icon_Dashboard2 from "@/public/images/Icon_Dashboard2.png"
 import Icon_Dashboard3 from "@/public/images/Icon_Dashboard3.png"
 
-export default function AdminPage() {
+export default function AdminHome() {
   const [date, setDate] = useState("")
 
   useEffect(() => {

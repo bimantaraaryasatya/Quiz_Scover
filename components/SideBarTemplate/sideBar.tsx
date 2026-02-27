@@ -218,17 +218,19 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
           </h1>
 
           {/* Dummy User */}
-          <div className="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
-            <FaRegUserCircle className="text-2xl md:text-3xl text-gray-600" />
-            <div className="leading-tight">
-              <p className="font-semibold text-sm text-gray-800">
-                Scover Admin
-              </p>
-              <p className="text-xs text-gray-500">
-                Super Admin
-              </p>
+          <a href="/admin/profile">
+            <div className="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
+              <FaRegUserCircle className="text-2xl md:text-3xl text-gray-600" />
+              <div className="leading-tight">
+                <p className="font-semibold text-sm text-gray-800">
+                  Scover Admin
+                </p>
+                <p className="text-xs text-gray-500">
+                  Super Admin
+                </p>
+              </div>
             </div>
-          </div>
+          </a>
         </header>
 
         {/* CONTENT */}

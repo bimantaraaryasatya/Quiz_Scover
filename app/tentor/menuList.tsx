@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { FaHome } from "react-icons/fa";
-import { IoDocumentTextOutline } from "react-icons/io5";
+import { FiHome } from "react-icons/fi";
+import { MdHistory } from "react-icons/md";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { MdOutlineQuiz } from "react-icons/md"
 import { IoSettingsOutline } from "react-icons/io5";
@@ -18,7 +18,7 @@ let MenuList: IPropMenu[] = [
         id: `home`,
         path: `/tentor/home`,
         label: `Home`,
-        icon: <FaHome />,
+        icon: <FiHome/>,
         category: "dashboard"
     },
     {
@@ -29,10 +29,10 @@ let MenuList: IPropMenu[] = [
         category: "dashboard"
     },
     {
-        id: `quiz-reports`,
-        path: `/tentor/quiz-reports`,
-        label: `Quiz Reports`,
-        icon: <IoDocumentTextOutline/>,
+        id: `history`,
+        path: `/tentor/history`,
+        label: `History`,
+        icon: <MdHistory/>,
         category: "dashboard"
     },
     {

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { FaHome } from "react-icons/fa";
-import { IoDocumentTextOutline } from "react-icons/io5";
+import { FiHome } from "react-icons/fi";
+import { MdHistory } from "react-icons/md";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { SlCalender } from "react-icons/sl";
 import { MdOutlineQuiz } from "react-icons/md";
@@ -19,7 +19,7 @@ let MenuList: IPropMenu[] = [
         id: `home`,
         path: `/student/home`,
         label: `Home`,
-        icon: <FaHome />,
+        icon: <FiHome/>,
         category: "dashboard"
     },
     {
@@ -37,10 +37,10 @@ let MenuList: IPropMenu[] = [
         category: "dashboard"
     },
     {
-        id: `quiz-reports`,
-        path: `/student/quiz-reports`,
-        label: `Quiz Reports`,
-        icon: <IoDocumentTextOutline/>,
+        id: `history`,
+        path: `/student/history`,
+        label: `History`,
+        icon: <MdHistory/>,
         category: "dashboard"
     },
     {

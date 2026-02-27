@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import { FaHome } from "react-icons/fa";
-import { IoDocumentTextOutline } from "react-icons/io5";
+import { FiHome } from "react-icons/fi";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { MdOutlineQuiz } from "react-icons/md"
+import { MdHistory } from "react-icons/md";
 import { GoPeople } from "react-icons/go";
 import { MdOutlineClass } from "react-icons/md";
 import { GoBook } from "react-icons/go";
@@ -21,7 +21,7 @@ let MenuList: IPropMenu[] = [
         id: `home`,
         path: `/admin/home`,
         label: `Home`,
-        icon: <FaHome />,
+        icon: <FiHome/>,
         category: "dashboard"
     },
     {
@@ -53,10 +53,10 @@ let MenuList: IPropMenu[] = [
         category: "dashboard"
     },
     {
-        id: `quiz-reports`,
-        path: `/admin/quiz-reports`,
-        label: `Quiz Reports`,
-        icon: <IoDocumentTextOutline/>,
+        id: `history`,
+        path: `/admin/history`,
+        label: `History`,
+        icon: <MdHistory/>,
         category: "dashboard"
     },
     {
