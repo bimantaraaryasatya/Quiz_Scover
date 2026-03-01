@@ -8,6 +8,7 @@
 @theme inline {
   --color-primary: #0D4669;
   --color-secondary: #FAD136;
+  --color-gray: #808080;
 }
 
 input[type="number"]::-webkit-inner-spin-button,

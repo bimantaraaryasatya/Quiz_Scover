@@ -19,9 +19,6 @@ export default function AdminHome() {
     setDate(formatted)
   }, [])
 
-  // ========================
-  // Dummy Data
-  // ========================
   const statsData = [
     {
       id: 1,
@@ -50,113 +47,87 @@ export default function AdminHome() {
   ]
 
   const activityData = [
-    {
-      id: 1,
-      name: "John Doe",
-      activity: "Just Created New Quiz LATSOL BI: BI-7",
-    },
-    {
-      id: 2,
-      name: "John Doe",
-      activity: "Just Created New Quiz LATSOL BI: BI-7",
-    },
-    {
-      id: 3,
-      name: "John Doe",
-      activity: "Just Created New Quiz LATSOL BI: BI-7",
-    },
-    {
-      id: 4,
-      name: "John Doe",
-      activity: "Just Created New Quiz LATSOL BI: BI-7",
-    },
+    { id: 1, name: "John Doe", activity: "Just Created New Quiz LATSOL BI: BI-7" },
+    { id: 2, name: "John Doe", activity: "Just Created New Quiz LATSOL BI: BI-7" },
+    { id: 3, name: "John Doe", activity: "Just Created New Quiz LATSOL BI: BI-7" },
+    { id: 4, name: "John Doe", activity: "Just Created New Quiz LATSOL BI: BI-7" },
   ]
 
   return (
-    <div className=" bg-gray-50 min-h-screen">
-      {/* Header */}
+    <div className="bg-gray-50 min-h-screen p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Good Morning, Admin</h1>
         <p className="text-gray-500">{date}</p>
       </div>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-        {statsData.map((item) => {
-          const isPositive = item.change.includes("+")
-          return (
-            <div
-              key={item.id}
-              className="bg-white p-5 rounded-xl shadow-sm"
-            >
-                <div className="flex justify-between">
+      <div className="flex flex-col lg:flex-row justify-between gap-6">
+        <div className="flex-1">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+            {statsData.map((item) => {
+              const isPositive = item.change.includes("+")
+              return (
+                <div
+                  key={item.id}
+                  className="bg-white p-5 rounded-xl shadow-sm"
+                >
+                  <div className="flex justify-between items-start">
                     <div>
-                        <p className="text-gray-500 text-sm">{item.title}</p>
-                        <h2 className="text-2xl font-bold mt-2">{item.value}</h2>
+                      <p className="text-gray-500 text-sm">{item.title}</p>
+                      <h2 className="text-2xl font-bold mt-2">{item.value}</h2>
                     </div>
-                    <div>
-                        <img src={item.image} alt="" />
-                    </div>
-                </div>
+                    <img src={item.image} alt="" className="w-12 h-12 object-contain" />
+                  </div>
 
-                <div className="flex items-center gap-2 mt-2 text-sm">
-                    <span
-                    className={
-                        isPositive ? "text-green-500" : "text-red-500"
-                    }
-                    >
-                    {item.change}
+                  <div className="flex items-center gap-2 mt-4 text-sm">
+                    <span className={isPositive ? "text-green-500" : "text-red-500"}>
+                      {item.change}
                     </span>
                     <span className="text-gray-400">
-                    {item.desc}
+                      {item.desc}
                     </span>
+                  </div>
                 </div>
+              )
+            })}
+          </div>
+
+          <div className="bg-white p-5 rounded-xl shadow-sm">
+            <h3 className="font-semibold mb-4">
+              Average Student Assessment Score
+            </h3>
+            <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+              Chart Placeholder
             </div>
-          )
-        })}
-      </div>
-
-      {/* Main Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Chart */}
-        <div className="lg:col-span-2 bg-white p-5 rounded-xl shadow-sm h-fit">
-          <h3 className="font-semibold mb-4">
-            Average Student Assessment Score
-          </h3>
-
-          <div className="w-full h-full bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
-            Chart Placeholder
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div className="bg-white p-5 rounded-xl shadow-sm">
-          <h3 className="font-semibold mb-4">Recent Activity</h3>
+        <div className="w-full lg:w-1/3">
+          <div className="bg-white p-5 rounded-xl shadow-sm">
+            <h3 className="font-semibold mb-4">Recent Activity</h3>
 
-          <div className="space-y-4">
-            {activityData.map((item) => (
-              <div
-                key={item.id}
-                className="border border-[#0089FF] rounded-lg p-4 bg-white hover:shadow-md transition"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full" />
-                  <div>
-                    <h4 className="font-semibold">
-                      {item.name}
-                    </h4>
-                    <p className="text-sm text-gray-500">
-                      {item.activity}
-                    </p>
+            <div className="space-y-4">
+              {activityData.map((item) => (
+                <div
+                  key={item.id}
+                  className="border border-[#0089FF] rounded-lg p-4 bg-white hover:shadow-md transition"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gray-300 rounded-full" />
+                    <div>
+                      <h4 className="font-semibold">{item.name}</h4>
+                      <p className="text-sm text-gray-500">
+                        {item.activity}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <button className="mt-5 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-            Load More
-          </button>
+            <button className="mt-5 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+              Load More
+            </button>
+          </div>
         </div>
       </div>
     </div>
