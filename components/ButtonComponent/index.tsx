@@ -18,9 +18,9 @@ export const MainButton = ({ children, type, onClick, className }: Props) => {
     )
 }
 
-export const ActiveButton = ({ children, type, onClick, className }: Props) => {
+export const SecondButton = ({ children, type, onClick, className }: Props) => {
     return (
-        <button className={`text-sm bg-secondary text-primary rounded-md py-2 px-4 hover:cursor-pointer font-bold ${className}`} type={type} onClick={() => { if (onClick) onClick() }}>
+        <button className={`text-sm bg-transparent text-primary border border-primary rounded-md py-2 px-4 hover:cursor-pointer font-bold ${className}`} type={type} onClick={() => { if (onClick) onClick() }}>
             {children}
         </button>
     )

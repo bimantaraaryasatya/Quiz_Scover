@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify"
 import { get } from "@/lib/api-bridge"
 import { BASE_API_URL } from "@/global"
 import { FaRegUserCircle } from "react-icons/fa";
+import ProfilePicTest from "@/public/images/profile.jpeg"
 
 type MenuType = {
   id: string
@@ -219,13 +220,14 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
 
           {/* Dummy User */}
           <a href="/admin/profile">
-            <div className="flex items-center gap-4 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200">
-              <FaRegUserCircle className="text-2xl md:text-3xl text-gray-600" />
+            <div className="flex items-center gap-4 px-4 py-2 rounded-xl border-2 border-primary/70">
+              {/* <FaRegUserCircle className="text-2xl md:text-3xl text-gray-600" /> */}
+              <img src={ProfilePicTest.src} alt="Profile" className="w-10 h-10 rounded-full" />
               <div className="leading-tight">
-                <p className="font-semibold text-sm text-gray-800">
+                <p className="font-bold text-sm text-gray-800">
                   Scover Admin
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="font-medium text-xs text-gray-500">
                   Super Admin
                 </p>
               </div>

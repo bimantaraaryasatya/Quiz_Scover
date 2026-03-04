@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { MainButton, ActiveButton, SubmitButton, UnsureButton, NextButton } from "@/components/ButtonComponent";
+import { MainButton, SecondButton, SubmitButton, UnsureButton, NextButton } from "@/components/ButtonComponent";
 import { QuizDifficulty, ClassTag, DoneTag, DueTag, OverdueTag } from "@/components/BadgeTagComponent";
 
 export default function Home() {
@@ -18,9 +18,9 @@ export default function Home() {
             </svg>
             <p>Check Dashboard</p>
           </MainButton>
-          <ActiveButton className="w-fit" type="submit" onClick={() => router.push("/admin/home")}>
+          <SecondButton className="w-fit" type="submit" onClick={() => router.push("/admin/home")}>
             <p>Admin Dashboard</p>
-          </ActiveButton>
+          </SecondButton>
           <SubmitButton className="w-fit" type="submit" onClick={() => alert("Button clicked!")}>
             <p>Submit</p>
           </SubmitButton>

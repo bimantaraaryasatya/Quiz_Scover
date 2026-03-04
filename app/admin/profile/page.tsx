@@ -42,76 +42,11 @@ export default function AdminProfile() {
                             <InfoItem label="Full Name" value="Abdul Mohammed" />
                             <InfoItem label="Email" value="abdul@gmail.com" />
                             <InfoItem label="Phone Number" value="+62 1122 890" />
-                            <InfoItem label="Role" value="Student" />
+                            <InfoItem label="Role" value="Admin" />
                             <InfoItem label="Created At" value="January, 2-3-2026" />
                         </div>
-
-                        <div className="hidden xl:block w-px bg-gray-200" />
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-5">
-                            <InfoItem label="Parents Name" value="Lucas Baltini" />
-                            <InfoItem label="Phone Number" value="+62 1122 890" />
-                            <InfoItem label="Email" value="baltini@gmail.com" />
-                            <InfoItem label="Created At" value="January, 2-3-2026" />
-                            <InfoItem label="Role" value="Parent" />
-                        </div>
-
                     </div>
                 </div>
-            </div>
-
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-
-                <div className="bg-white rounded-2xl p-6 shadow-sm">
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                        <h2 className="text-xl font-semibold">
-                            Recent History
-                        </h2>
-                        <MainButton
-                            type="button"
-                            onClick={() => alert("Hallo")}
-                            className="w-fit"
-                        >
-                            View More
-                        </MainButton>
-                    </div>
-
-                    <div className="mt-6 overflow-x-auto">
-                        <table className="w-full min-w-125 text-sm">
-                            <thead>
-                                <tr className="text-left text-gray-500">
-                                    <th className="font-medium pb-3">Quiz Name</th>
-                                    <th className="font-medium pb-3">Grade</th>
-                                    <th className="font-medium pb-3">Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody className="space-y-2">
-                                <tr>
-                                    <td className="py-3">Bahasa Indonesia</td>
-                                    <td className="py-3">100</td>
-                                    <td className="py-3">45 Minutes</td>
-                                </tr>
-                                <tr>
-                                    <td className="py-3">Matematika</td>
-                                    <td className="py-3">90</td>
-                                    <td className="py-3">1 Hour</td>
-                                </tr>
-                                <tr>
-                                    <td className="py-3">Fisika</td>
-                                    <td className="py-3">65</td>
-                                    <td className="py-3">2 Hours</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 shadow-sm">
-                    <h2 className="text-xl font-semibold mb-4">
-                        Report
-                    </h2>
-                </div>
-
             </div>
         </div>
     )

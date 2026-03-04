@@ -51,10 +51,10 @@ export default function AdminUser() {
                             </td>
                             <td className="px-6 py-4">
                                 <div className="flex gap-3">
-                                    <button className="border border-blue-500 text-blue-500 p-2 rounded-lg hover:bg-blue-50 transition">
+                                    <button className="border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 hover:cursor-pointer transition">
                                         <FiEdit />
                                     </button>
-                                    <button className="border border-red-500 text-red-500 p-2 rounded-lg hover:bg-red-50 transition">
+                                    <button className="border border-red-500 text-red-500 px-4 py-2 rounded-lg hover:bg-red-50 hover:cursor-pointer transition">
                                         <FiTrash2 />
                                     </button>
                                 </div>

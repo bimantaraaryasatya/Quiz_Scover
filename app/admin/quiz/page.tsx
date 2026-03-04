@@ -33,7 +33,7 @@ export default function AdminUser() {
             </div>
 
             <div className="flex flex-col gap-4 items-start md:flex-row md:justify-between md:items-center">
-                <div className="flex flex-col w-full md:w-fit md:flex-row md:flex-wrap bg-white border border-[#D5D5D5] rounded-xl">
+                <div className="flex flex-col w-full md:w-fit md:flex-row md:flex-wrap bg-white border border-[#D5D5D5] rounded-xl font-medium">
                     {/* Icon */}
                     <div className="flex items-center gap-2 text-gray-600 p-4 md:p-4 
                                     border-b md:border-b-0 md:border-r border-[#D5D5D5]">
@@ -50,7 +50,7 @@ export default function AdminUser() {
                                     border-b md:border-b-0 md:border-r border-[#D5D5D5]">
                         <button
                             onClick={() => setOpenSubject(!openSubject)}
-                            className="text-sm flex items-center gap-2 w-full md:w-auto justify-between"
+                            className="text-sm flex items-center gap-2 w-full md:w-auto justify-between hover:cursor-pointer"
                         >
                             {subject || "Subject"} <IoIosArrowDown />
                         </button>
@@ -78,7 +78,7 @@ export default function AdminUser() {
                                     border-b md:border-b-0 md:border-r border-[#D5D5D5]">
                         <button
                             onClick={() => setOpenGrade(!openGrade)}
-                            className="text-sm flex items-center gap-2 w-full md:w-auto justify-between"
+                            className="text-sm flex items-center gap-2 w-full md:w-auto justify-between hover:cursor-pointer"
                         >
                             {grade || "Grade"} <IoIosArrowDown />
                         </button>
@@ -106,7 +106,7 @@ export default function AdminUser() {
                                     border-b md:border-b-0 md:border-r border-[#D5D5D5]">
                         <button
                             onClick={() => setOpenDifficulty(!openDifficulty)}
-                            className="text-sm flex items-center gap-2 w-full md:w-auto justify-between"
+                            className="text-sm flex items-center gap-2 w-full md:w-auto justify-between hover:cursor-pointer"
                         >
                             {difficulty || "Difficulty"} <IoIosArrowDown />
                         </button>
@@ -133,7 +133,7 @@ export default function AdminUser() {
                     {/* Reset */}
                     <button
                         onClick={resetFilter}
-                        className="flex items-center gap-2 text-red-500 text-sm p-4 md:p-4"
+                        className="flex items-center gap-2 text-red-500 text-sm p-4 md:p-4 hover:cursor-pointer"
                     >
                         <IoReload />
                         Reset Filter
@@ -183,10 +183,10 @@ export default function AdminUser() {
                             </td>
                             <td className="px-6 py-4">
                                 <div className="flex gap-3">
-                                    <button className="border border-blue-500 text-blue-500 p-2 rounded-lg hover:bg-blue-50 transition">
+                                    <button className="border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 hover:cursor-pointer transition">
                                         <FiEdit />
                                     </button>
-                                    <button className="border border-red-500 text-red-500 p-2 rounded-lg hover:bg-red-50 transition">
+                                    <button className="border border-red-500 text-red-500 px-4 py-2 rounded-lg hover:bg-red-50 hover:cursor-pointer transition">
                                         <FiTrash2 />
                                     </button>
                                 </div>
