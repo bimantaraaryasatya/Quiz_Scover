@@ -54,7 +54,7 @@ export default function AdminHome() {
   ]
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
+    <div className="bg-gray-50 min-h-screen">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Good Morning, Admin</h1>
         <p className="text-gray-500">{date}</p>

@@ -127,7 +127,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
   }, {} as Record<string, MenuType[]>)
 
   return (
-    <div className="min-h-screen md:h-screen flex bg-slate-50 md:overflow-hidden">
+    <div className="min-h-screen md:h-screen flex bg-slate-50 ">
       <ToastContainer containerId="toastSideBar" />
       <aside
         className={`
@@ -209,7 +209,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
         </div>
       </aside>
       {/* RIGHT SIDE WRAPPER */}
-      <div className="flex-1 flex flex-col md:h-screen">
+      <div className="flex-1 flex flex-col md:h-screen min-w-0">
 
         {/* HEADER */}
         <header className="sticky top-0 z-40 flex justify-between items-center px-5 md:px-10 h-20 bg-white border-b border-[#E8E8E8]">
