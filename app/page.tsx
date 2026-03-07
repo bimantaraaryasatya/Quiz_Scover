@@ -2,9 +2,12 @@
 import { useRouter } from "next/navigation";
 import { MainButton, SecondButton, SubmitButton, UnsureButton, NextButton } from "@/components/ButtonComponent";
 import { QuizDifficulty, ClassTag, DoneTag, DueTag, OverdueTag } from "@/components/BadgeTagComponent";
+import { InputComponent, TextGroupComponent, InputGroupComponent } from "@/components/InputComponent";
+import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const [email, setEmail] = useState("")
   return (
     <div className="mx-20 my-20 flex flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -53,6 +56,16 @@ export default function Home() {
             <p>Overdue</p>
           </OverdueTag>
         </div>
+      </div>
+      <div className="flex gap-2">
+        <InputGroupComponent
+          id="email"
+          label="Email"
+          type="email"
+          placeholder="Input Email"
+          value={email}
+          onChange={setEmail}
+        />
       </div>
     </div>
   );
