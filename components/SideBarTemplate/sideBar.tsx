@@ -12,7 +12,7 @@ import { jwtDecode } from "jwt-decode"
 import { ToastContainer, toast } from "react-toastify"
 import { get } from "@/lib/api-bridge"
 import { BASE_API_URL } from "@/global"
-import { FaRegUserCircle } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
 import ProfilePicTest from "@/public/images/profile.jpeg"
 
 type MenuType = {
@@ -38,37 +38,37 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
   // const [ownerKos, setOwnerKos] = useState<IKos | null>(null)
   const router = useRouter()
 
-  useEffect(() => {
-    let touchStartX = 0
-    let touchEndX = 0
+  // useEffect(() => {
+  //   let touchStartX = 0
+  //   let touchEndX = 0
 
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartX = e.changedTouches[0].screenX
-    }
+  //   const handleTouchStart = (e: TouchEvent) => {
+  //     touchStartX = e.changedTouches[0].screenX
+  //   }
 
-    const handleTouchEnd = (e: TouchEvent) => {
-      touchEndX = e.changedTouches[0].screenX
-      handleGesture()
-    }
+  //   const handleTouchEnd = (e: TouchEvent) => {
+  //     touchEndX = e.changedTouches[0].screenX
+  //     handleGesture()
+  //   }
 
-    const handleGesture = () => {
-      if (touchEndX - touchStartX > 80) {
-        setIsMobileOpen(true)
-      }
+  //   const handleGesture = () => {
+  //     if (touchEndX - touchStartX > 80) {
+  //       setIsMobileOpen(true)
+  //     }
 
-      if (touchStartX - touchEndX > 80) {
-        setIsMobileOpen(false)
-      }
-    }
+  //     if (touchStartX - touchEndX > 80) {
+  //       setIsMobileOpen(false)
+  //     }
+  //   }
 
-    window.addEventListener("touchstart", handleTouchStart)
-    window.addEventListener("touchend", handleTouchEnd)
+  //   window.addEventListener("touchstart", handleTouchStart)
+  //   window.addEventListener("touchend", handleTouchEnd)
 
-    return () => {
-      window.removeEventListener("touchstart", handleTouchStart)
-      window.removeEventListener("touchend", handleTouchEnd)
-    }
-  }, [])
+  //   return () => {
+  //     window.removeEventListener("touchstart", handleTouchStart)
+  //     window.removeEventListener("touchend", handleTouchEnd)
+  //   }
+  // }, [])
 
   useEffect(() => {
     const TOKEN = getCookie("token")
@@ -214,16 +214,23 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
 
         {/* HEADER */}
         <header className="sticky top-0 z-40 flex justify-between items-center px-5 md:px-10 h-20 bg-white border-b border-[#E8E8E8]">
-          <h1 className="text-xl md:text-2xl font-semibold text-gray-800">
-            {title}
-          </h1>
+          <div className="flex items-center gap-2">
+            <button className="text-lg block md:hidden" onClick={() => setIsMobileOpen(true)}>
+              <GiHamburgerMenu/>
+            </button>
+            <div>
+              <h1 className="text-xl md:text-2xl font-semibold text-gray-800">
+                {title}
+              </h1>
+            </div>
+          </div>
 
           {/* Dummy User */}
           <a href="/admin/profile">
-            <div className="flex items-center gap-4 px-4 py-2 rounded-xl border-2 border-primary/70">
+            <div className="flex items-center gap-4 px-4 py-2 rounded-xl md:border-2 md:border-primary/70">
               {/* <FaRegUserCircle className="text-2xl md:text-3xl text-gray-600" /> */}
               <img src={ProfilePicTest.src} alt="Profile" className="w-10 h-10 rounded-full" />
-              <div className="leading-tight">
+              <div className="leading-tight hidden md:block">
                 <p className="font-bold text-sm text-gray-800">
                   Scover Admin
                 </p>
