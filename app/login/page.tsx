@@ -67,7 +67,7 @@ export default function Login() {
                                         <label>Remember Me</label>
                                     </div>
 
-                                    <a href="#" className="text-[#808080]">
+                                    <a href="#" className="text-gray">
                                         Forgot Password?
                                     </a>
                                 </div>
