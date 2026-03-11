@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { FiCalendar } from "react-icons/fi"
 import Icon_Dashboard from "@/public/images/Icon_Dashboard.png"
 import Icon_Dashboard2 from "@/public/images/Icon_Dashboard2.png"
 import Icon_Dashboard3 from "@/public/images/Icon_Dashboard3.png"
@@ -8,9 +9,17 @@ import Icon_Dashboard3 from "@/public/images/Icon_Dashboard3.png"
 export default function AdminHome() {
   const [date, setDate] = useState("")
 
+  const getGreeting = () => {
+    const hour = new Date().getHours()
+
+    if (hour < 12) return "Good Morning"
+    if (hour < 18) return "Good Afternoon"
+    return "Good Evening"
+  }
+
   useEffect(() => {
     const now = new Date()
-    const formatted = now.toLocaleDateString("id-ID", {
+    const formatted = now.toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
       month: "long",
@@ -56,8 +65,8 @@ export default function AdminHome() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Good Morning, Admin</h1>
-        <p className="text-gray-500">{date}</p>
+        <h1 className="text-3xl font-bold">{getGreeting()}, Admin</h1>
+        <p className="text-gray-500 flex gap-2 items-center"><FiCalendar /> {date}</p>
       </div>
 
       <div className="flex flex-col lg:flex-row justify-between gap-6">

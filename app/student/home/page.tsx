@@ -3,13 +3,13 @@
 import { useState } from "react"
 import { CiSearch } from "react-icons/ci"
 import { FiTrendingUp, FiCalendar, FiAward } from "react-icons/fi"
-import { FaChartLine } from "react-icons/fa"
 
 export default function TentorHome() {
 
     const [search, setSearch] = useState("")
 
     const currentDate = new Date().toLocaleDateString('en-US', {
+        weekday: "long",
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -24,7 +24,7 @@ export default function TentorHome() {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen p-6">
+        <div className="bg-gray-50 min-h-screen">
 
             {/* Header */}
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
@@ -62,21 +62,24 @@ export default function TentorHome() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
 
                 {/* Journey Card */}
-                <div className="bg-gradient-to-r from-[#1f4f6e] to-[#4a7bd8] rounded-2xl p-6 text-white shadow-md">
+                <div className="bg-linear-to-r from-[#1f4f6e] to-[#4a7bd8] rounded-2xl p-6 text-white shadow-md flex flex-col justify-between">
+                    <div>
+                        <h2 className="text-2xl font-bold mb-6">
+                            My Learning Journey
+                        </h2>
+                    </div>
 
-                    <h2 className="text-2xl font-bold mb-6">
-                        My Learning Journey
-                    </h2>
+                    <div>
+                        <a href="/student/history" className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-full hover:bg-blue-50 transition">
+                            Explore
+                        </a>
 
-                    <button className="bg-white text-blue-600 font-semibold py-2 px-6 rounded-full hover:bg-blue-50 transition">
-                        Explore
-                    </button>
-
+                    </div>
                 </div>
 
 
                 {/* Avg Quiz */}
-                <div className="bg-gradient-to-r from-[#F6D365] to-[#F6C84C] rounded-2xl p-6 text-gray-800 shadow-md">
+                <div className="bg-linear-to-r from-[#F6D365] to-[#F6C84C] rounded-2xl p-6 text-gray-800 shadow-md">
 
                     <div className="flex items-center justify-between mb-4">
 
@@ -102,7 +105,7 @@ export default function TentorHome() {
 
 
                 {/* Avg Score */}
-                <div className="bg-gradient-to-r from-[#F6D365] to-[#F6C84C] rounded-2xl p-6 text-gray-800 shadow-md">
+                <div className="bg-linear-to-r from-[#F6D365] to-[#F6C84C] rounded-2xl p-6 text-gray-800 shadow-md">
 
                     <div className="flex items-center justify-between mb-4">
 
@@ -138,16 +141,16 @@ export default function TentorHome() {
                         Subjects
                     </h2>
 
-                    <button className="text-sm text-blue-600 hover:text-blue-700">
+                    <a href="/student/quiz-available" className="text-sm text-blue-600 hover:text-blue-700">
                         See more
-                    </button>
+                    </a>
 
                 </div>
 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-                    <div className="bg-[#AFC3E0] rounded-2xl p-5 shadow-md hover:shadow-lg transition">
+                    <div className="bg-[#AFC3E0] rounded-2xl p-5 shadow-md hover:shadow-lg transition hover:cursor-pointer">
                         <h3 className="font-bold text-gray-800 mb-2">Mathematics</h3>
                         <p className="text-gray-600 text-sm mb-3">Description...</p>
                         <p className="text-gray-500 text-xs">Rudi Wicaksono</p>
@@ -177,7 +180,7 @@ export default function TentorHome() {
 
 
             {/* Recently Table */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm mb-8">
+            <div className=" mb-8">
 
                 <div className="flex items-center justify-between mb-6">
 
@@ -185,134 +188,44 @@ export default function TentorHome() {
                         Recently
                     </h2>
 
-                    <button className="text-blue-600 text-sm font-semibold">
-                        See more →
-                    </button>
+                    <a href="/student/history" className="text-blue-600 hover:text-blue-700 text-sm">
+                        See more 
+                    </a>
 
                 </div>
 
 
-                <div className="overflow-x-auto">
-
-                    <table className="w-full">
-
-                        <thead>
-                            <tr className="border-b">
-
-                                <th className="text-left py-3 px-4 text-sm">ID</th>
-                                <th className="text-left py-3 px-4 text-sm">NAME</th>
-                                <th className="text-left py-3 px-4 text-sm">SUBJECT</th>
-                                <th className="text-left py-3 px-4 text-sm">CLASS</th>
-                                <th className="text-left py-3 px-4 text-sm">GRADE</th>
-
+                <div className="bg-white rounded-xl shadow-sm mt-6 overflow-x-auto">
+                    <table className="w-full text-sm">
+                        <thead className="bg-gray-100 text-gray-600">
+                            <tr>
+                            <th className="px-6 py-4 text-left">ID</th>
+                            <th className="px-6 py-4 text-left">QUIZ NAME</th>
+                            <th className="px-6 py-4 text-left">SUBJECT</th>
+                            <th className="px-6 py-4 text-left">CLASS</th>
+                            <th className="px-6 py-4 text-left">START</th>
+                            <th className="px-6 py-4 text-left">FINISHED</th>
+                            <th className="px-6 py-4 text-left">SCORE</th>
                             </tr>
                         </thead>
-
                         <tbody>
-
-                            {[
-                                {
-                                    id: "28 Jan 2026",
-                                    name: "Matematika PM",
-                                    subject: "Matematika",
-                                    class: "P. UTBK",
-                                    grade: "90"
-                                },
-                                {
-                                    id: "27 Jan 2026",
-                                    name: "Physics Basic",
-                                    subject: "Physics",
-                                    class: "10-A",
-                                    grade: "85"
-                                },
-                                {
-                                    id: "26 Jan 2026",
-                                    name: "Chemistry Lab",
-                                    subject: "Chemistry",
-                                    class: "10-B",
-                                    grade: "78"
-                                }
-                            ].map((item, index) => (
-
-                                <tr
-                                    key={index}
-                                    className="border-b hover:bg-gray-50"
-                                >
-
-                                    <td className="py-3 px-4 text-sm font-medium">
-                                        {item.id}
-                                    </td>
-
-                                    <td className="py-3 px-4 text-sm text-gray-600">
-                                        {item.name}
-                                    </td>
-
-                                    <td className="py-3 px-4 text-sm text-gray-600">
-                                        {item.subject}
-                                    </td>
-
-                                    <td className="py-3 px-4 text-sm text-gray-600">
-                                        {item.class}
-                                    </td>
-
-                                    <td className="py-3 px-4 text-sm font-semibold text-green-600">
-                                        {item.grade}
-                                    </td>
-
-                                </tr>
-
+                            {[1, 2, 3].map((item) => (
+                            <tr key={item} className="hover:bg-gray-50 transition-colors">
+                                <td className="px-6 py-4">00001</td>
+                                <td className="px-6 py-4">
+                                Matematika PM
+                                </td>
+                                <td className="px-6 py-4">Matematika</td>   
+                                <td className="px-6 py-4">Kelas 12 UTBK</td>
+                                <td className="px-6 py-4">12.30</td>
+                                <td className="px-6 py-4">13.30</td>
+                                <td className="px-6 py-4 text-green-500">90</td>
+                            </tr>
                             ))}
-
                         </tbody>
-
                     </table>
-
-                </div>
-
+                </div> 
             </div>
-
-
-            {/* Learning Streak */}
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 text-white shadow-md">
-
-                <div className="flex items-center justify-between">
-
-                    <div>
-
-                        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                            <FaChartLine />
-                            Learning Streak
-                        </h2>
-
-                        <p className="text-orange-100 mb-4">
-                            Keep up the great work!
-                        </p>
-
-                        <div className="flex gap-6">
-
-                            <div>
-                                <p className="text-3xl font-bold">7</p>
-                                <p className="text-sm text-orange-100">Days</p>
-                            </div>
-
-                            <div>
-                                <p className="text-3xl font-bold">25</p>
-                                <p className="text-sm text-orange-100">Quizzes</p>
-                            </div>
-
-                            <div>
-                                <p className="text-3xl font-bold">92%</p>
-                                <p className="text-sm text-orange-100">Accuracy</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
     )
 }
