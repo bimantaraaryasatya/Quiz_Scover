@@ -22,13 +22,13 @@ let MenuList: IPropMenu[] = [
         icon: <FiHome/>,
         category: "dashboard"
     },
-    {
-        id: `daily-quiz`,
-        path: `/student/daily-quiz`,
-        label: `Daily Quiz`,
-        icon: <SlCalender/>,
-        category: "dashboard"
-    },
+    // {
+    //     id: `daily-quiz`,
+    //     path: `/student/daily-quiz`,
+    //     label: `Daily Quiz`,
+    //     icon: <SlCalender/>,
+    //     category: "dashboard"
+    // },
     {
         id: `quiz-available`,
         path: `/student/quiz-available`,
