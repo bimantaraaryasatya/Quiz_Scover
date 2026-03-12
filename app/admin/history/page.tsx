@@ -107,7 +107,7 @@ export default function AdminUser() {
                         <tr key={item} className="hover:bg-gray-50 transition-colors">
                             <td className="px-6 py-4">00001</td>
                             <td className="px-6 py-4">
-                            Christine Brookss
+                            Christine Brooks
                             </td>
                             <td className="px-6 py-4">
                             christine@gmail.com
