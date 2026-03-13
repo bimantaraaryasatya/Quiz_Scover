@@ -82,25 +82,6 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
     }
   }, [])
 
-  // useEffect(() => {
-    // if (!user || user.role !== "owner") return
-
-    const fetchOwnerKos = async () => {
-      try {
-        const res = await get(`${BASE_API_URL}/kos`)
-        if (res?.data?.status) {
-          // const kosList: IKos[] = res.data.data
-          // const myKos = kosList.find(kos => kos.user_id === user.id)
-          // setOwnerKos(myKos || null)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchOwnerKos()
-  // }, [user])
-
   const handleLogout = () => {
     removeCookie("token")
     removeCookie("id")
