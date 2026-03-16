@@ -1,17 +1,91 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import  { BASE_API_URL } from "@/global"
+import { storeCookie } from "@/lib/client-cookies"
+import axios from "axios"
+import { post } from "@/lib/api-bridge"
+import { FormEvent, useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { ToastContainer, toast } from "react-toastify"
 import LoginPageImage from "@/public/images/login_image.jpg"
 import LoginPageImage1 from "@/public/images/login_image1.jpg"
 import LoginPageImage2 from "@/public/images/login_image2.jpg"
 
 export default function Login() {
-
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const router = useRouter()
     const images = [
         LoginPageImage.src,
         LoginPageImage1.src,
         LoginPageImage2.src,
     ]
+    
+    const handleSubmit = async (e: FormEvent) => {
+        try {
+            e.preventDefault()
+
+            const url = `${BASE_API_URL}/user/login`
+            const payload = { email, password }
+
+            const { data } = await post(url, payload)
+
+            if (data.status === true) {
+
+                toast(data.message, {
+                    hideProgressBar: true,
+                    containerId: "toastLogin",
+                    type: "success",
+                    autoClose: 2000
+                })
+
+                storeCookie("token", data.TOKEN)
+                storeCookie("role", data.data.role)
+                storeCookie("email", data.data.email)
+                storeCookie("name", data.data.userName)
+
+                if (data.data.idUser) {
+                    storeCookie("id", data.data.idUser)
+                }
+
+                if (data.data.idAdmin) {
+                    storeCookie("id", data.data.idAdmin)
+                }
+
+                const role = data.data.role
+
+                if (role === "ADMIN") {
+                    setTimeout(() => router.replace("/admin/home"), 1000)
+                } 
+                else if (role === "TENTOR") {
+                    setTimeout(() => router.replace("/tentor/home"), 1000)
+                } 
+                else {
+                    setTimeout(() => router.replace("/student/home"), 1000)
+                }
+
+            } else {
+                toast(data.message, {
+                    hideProgressBar: true,
+                    containerId: "toastLogin",
+                    type: "warning",
+                    autoClose: 2000
+                })
+            }
+
+        } catch (error: any) {
+
+            const message =
+                error?.response?.data?.message || "Something went wrong"
+
+            toast(message, {
+                hideProgressBar: true,
+                containerId: "toastLogin",
+                type: "error",
+                autoClose: 2000
+            })
+        }
+    }
 
     const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -27,7 +101,7 @@ export default function Login() {
 
     return (
         <div className="w-full flex min-h-screen">
-            
+            <ToastContainer containerId={'toastLogin'}/>
             {/* LEFT */}
             <div className="w-full lg:w-[40%] flex justify-center items-center">
                 <div className="w-full px-6 lg:px-20 flex flex-col gap-4">
@@ -38,7 +112,7 @@ export default function Login() {
                         </h1>
                     </div>
 
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-4">
                             
                             <div className="flex flex-col gap-4">
@@ -47,6 +121,8 @@ export default function Login() {
                                     <label className="text-primary">Email</label>
                                     <input
                                         type="email"
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
                                         className="bg-primary/20 text-primary rounded-md px-4 py-3 focus:outline-none focus:bg-primary/30 transition"
                                         placeholder="Enter Your E-Mail"
                                     />
@@ -56,6 +132,8 @@ export default function Login() {
                                     <label className="text-primary">Password</label>
                                     <input
                                         type="password"
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
                                         className="bg-primary/20 text-primary rounded-md px-4 py-3 focus:outline-none focus:bg-primary/30 transition"
                                         placeholder="Enter Your Password"
                                     />
@@ -75,7 +153,7 @@ export default function Login() {
                             </div>
 
                             <div>
-                                <button className="bg-primary text-white font-semibold w-full px-4 py-3 rounded-md hover:opacity-90 transition">
+                                <button type="submit" className="bg-primary text-white font-semibold w-full px-4 py-3 rounded-md hover:opacity-90 transition">
                                     Login
                                 </button>
                             </div>

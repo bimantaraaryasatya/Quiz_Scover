@@ -38,17 +38,15 @@ export const get = async (url: string, token?: string) => {
     }
 }
 
-export const post = async (url: string, data: string | FormData, token: string) => {
+export const post = async (url: string, data: any, token?: string) => {
     try {
-        const typed: string = (typeof data == 'string') ? "application/json" : "multipart/form-data"
-        let headers: any = {
-            "Authorization": `Bearer ${token}` || '',
-            "Content-Type": typed
+        const headers: any = {}
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`
         }
 
-        let result = await axiosInstance.post(url, data, {
-            headers
-        })
+        const result = await axiosInstance.post(url, data, { headers })
 
         return {
             status: true,
@@ -66,23 +64,22 @@ export const post = async (url: string, data: string | FormData, token: string) 
 
         throw {
             response: {
-                data: {
-                    message
-                }
+                data: { message }
             }
         }
     }
 }
 
-export const put = async (url: string, data: string | FormData, token: string) => {
+export const put = async (url: string, data: any, token?: string) => {
     try {
-        const type: string = (typeof data == 'string') ? "application/json" : "multipart/form-data"
-        let result = await axiosInstance.put(url, data, {
-            headers: {
-                "Authorization": `Bearer ${token}` || '',
-                "Content-Type": type
-            }
-        })
+        const headers: any = {}
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`
+        }
+
+        const result = await axiosInstance.put(url, data, { headers })
+
         return {
             status: true,
             data: result.data
@@ -99,9 +96,7 @@ export const put = async (url: string, data: string | FormData, token: string) =
 
         throw {
             response: {
-                data: {
-                    message
-                }
+                data: { message }
             }
         }
     }
