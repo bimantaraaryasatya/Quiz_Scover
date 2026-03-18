@@ -1,127 +1,216 @@
 "use client"
 
 import Image from "next/image"
-import { MainButton } from "@/components/ButtonComponent"
-import Profile from "@/public/images/profile.jpeg"
+import { useState } from "react"
 
 export default function StudentProfile() {
-    return (
-        <div className="flex flex-col gap-8">
 
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-                    <h1 className="text-xl md:text-2xl font-semibold">
-                        Personal Details
-                    </h1>
+  const [showUserModal, setShowUserModal] = useState(false)
+  const [showParentModal, setShowParentModal] = useState(false)
 
-                    <MainButton className="w-fit flex items-center gap-2" type="button" onClick={() => alert("Edit Clicked")}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                        </svg>
-                        Edit
-                    </MainButton>
-                </div>
+  return (
+    <div className="p-8 bg-[#f5f7fb] min-h-screen">
 
-                <div className="flex flex-col lg:flex-row gap-10 md:gap-25 md:py-10">
+      {/* PROFILE CARD */}
+      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
 
-                    <div className="flex justify-start">
-                        <div className="w-32 h-40 md:w-32 md:h-40 lg:h-full relative rounded-xl overflow-hidden">
-                            <Image
-                                src={Profile}
-                                alt="Profile"
-                                fill
-                                className=""
-                            />
-                        </div>
-                    </div>
+        {/* GRADIENT */}
+        <div className="h-[120px] bg-gradient-to-r from-blue-500 via-purple-600 to-blue-400" />
 
-                    <div className="flex flex-col xl:flex-row flex-1 gap-8 xl:gap-12">
+        <div className="px-8 pb-10">
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-5">
-                            <InfoItem label="Username" value="@Mhmdz" />
-                            <InfoItem label="Full Name" value="Abdul Mohammed" />
-                            <InfoItem label="Email" value="abdul@gmail.com" />
-                            <InfoItem label="Phone Number" value="+62 1122 890" />
-                            <InfoItem label="Role" value="Student" />
-                            <InfoItem label="Created At" value="January, 2-3-2026" />
-                        </div>
+          {/* TOP SECTION */}
+          <div className="flex items-end justify-between -mt-14 mb-8">
 
-                        <div className="hidden xl:block w-px bg-gray-200" />
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow">
+                <Image
+                  src="/images/Icon_Dashboard.png"
+                  alt="profile"
+                  width={80}
+                  height={80}
+                />
+              </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-5">
-                            <InfoItem label="Parents Name" value="Lucas Baltini" />
-                            <InfoItem label="Phone Number" value="+62 1122 890" />
-                            <InfoItem label="Email" value="baltini@gmail.com" />
-                            <InfoItem label="Created At" value="January, 2-3-2026" />
-                            <InfoItem label="Role" value="Parent" />
-                        </div>
+              <div>
+                <h2 className="font-semibold text-gray-800 text-lg">
+                  Alice Smith
+                </h2>
 
-                    </div>
-                </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  alice.smith@student.com
+                </p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            {/* ONLY EDIT BUTTON */}
+            <button
+              onClick={() => setShowUserModal(true)}
+              className="bg-[#1f4f6e] hover:bg-[#183e55] text-white px-5 py-2 rounded-md text-sm"
+            >
+              Edit
+            </button>
 
-                <div className="bg-white rounded-2xl p-6 shadow-sm">
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                        <h2 className="text-xl font-semibold">
-                            Recent History
-                        </h2>
-                        <MainButton
-                            type="button"
-                            onClick={() => alert("Hallo")}
-                            className="w-fit"
-                        >
-                            View More
-                        </MainButton>
-                    </div>
+          </div>
 
-                    <div className="mt-6 overflow-x-auto">
-                        <table className="w-full min-w-125 text-sm">
-                            <thead>
-                                <tr className="text-left text-gray-500">
-                                    <th className="font-medium pb-3">Quiz Name</th>
-                                    <th className="font-medium pb-3">Grade</th>
-                                    <th className="font-medium pb-3">Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody className="space-y-2">
-                                <tr>
-                                    <td className="py-3">Bahasa Indonesia</td>
-                                    <td className="py-3">100</td>
-                                    <td className="py-3">45 Minutes</td>
-                                </tr>
-                                <tr>
-                                    <td className="py-3">Matematika</td>
-                                    <td className="py-3">90</td>
-                                    <td className="py-3">1 Hour</td>
-                                </tr>
-                                <tr>
-                                    <td className="py-3">Fisika</td>
-                                    <td className="py-3">65</td>
-                                    <td className="py-3">2 Hours</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+          {/* DIVIDER */}
+          <div className="border-t pt-6">
 
-                <div className="bg-white rounded-2xl p-6 shadow-sm">
-                    <h2 className="text-xl font-semibold mb-4">
-                        Report
-                    </h2>
-                </div>
+            <h3 className="font-semibold text-gray-800 mb-6">
+              Personal Information
+            </h3>
+
+            {/* GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              <Field label="Username" />
+              <Field label="Fullname" />
+              <Field label="Current Password" />
+              <Field label="Phone Number" />
+              <Field label="Parents Name" />
+              <Field label="Parents Phone Number" />
 
             </div>
+
+          </div>
+
         </div>
-    )
+      </div>
+
+      {/* ================= MODAL STEP 1 ================= */}
+      {showUserModal && (
+        <div className="fixed inset-0 bg-[#1e3a5f]/40 backdrop-blur-sm flex items-center justify-center z-50">
+          
+          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl px-8 py-7">
+
+            <div className="mb-5">
+              <h2 className="text-lg font-semibold text-gray-800">
+                Update User Information
+              </h2>
+              <p className="text-xs text-blue-500 text-right mt-1">
+                Step 1 of 2
+              </p>
+            </div>
+
+            <div className="w-full h-2 bg-gray-200 rounded-full mb-6">
+              <div className="w-1/3 h-2 bg-[#1f4f6e] rounded-full" />
+            </div>
+
+            <div className="space-y-4">
+              <InputModal label="Username" placeholder="Input Username" />
+              <InputModal label="Fullname" placeholder="Input Fullname" />
+              <InputModal label="New Password" placeholder="Min. 8 Characters" />
+              <InputModal label="Confirm Password" placeholder="Confirm Your New Password" error />
+            </div>
+
+            <div className="flex justify-between mt-6">
+              <button
+                onClick={() => setShowUserModal(false)}
+                className="px-5 py-2 border border-[#1f4f6e] text-[#1f4f6e] rounded-md text-sm"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowUserModal(false)
+                  setShowParentModal(true)
+                }}
+                className="px-6 py-2 bg-[#1f4f6e] text-white rounded-md text-sm"
+              >
+                Next
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL STEP 2 ================= */}
+      {showParentModal && (
+        <div className="fixed inset-0 bg-[#1e3a5f]/40 backdrop-blur-sm flex items-center justify-center z-50">
+          
+          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl px-8 py-7">
+
+            <div className="mb-5">
+              <h2 className="text-lg font-semibold text-gray-800">
+                Update User Parent Information
+              </h2>
+              <p className="text-xs text-blue-500 text-right mt-1">
+                Step 2 of 2
+              </p>
+            </div>
+
+            <div className="w-full h-2 bg-gray-200 rounded-full mb-6">
+              <div className="w-2/3 h-2 bg-[#1f4f6e] rounded-full" />
+            </div>
+
+            <div className="space-y-4">
+              <InputModal label="Email" placeholder="Input Email" />
+              <InputModal label="Phone Number" placeholder="8023456789" />
+            </div>
+
+            <div className="flex justify-between mt-6">
+              <button
+                onClick={() => {
+                  setShowParentModal(false)
+                  setShowUserModal(true)
+                }}
+                className="px-5 py-2 border border-[#1f4f6e] text-[#1f4f6e] rounded-md text-sm"
+              >
+                Back
+              </button>
+
+              <button
+                onClick={() => setShowParentModal(false)}
+                className="px-6 py-2 bg-[#1f4f6e] text-white rounded-md text-sm"
+              >
+                Update
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+    </div>
+  )
 }
 
-function InfoItem({ label, value }: { label: string; value: string }) {
-    return (
-        <div>
-            <p className="text-sm text-gray-500">{label}</p>
-            <p className="font-medium text-gray-800 wrap-break-words">{value}</p>
-        </div>
-    )
+/* FIELD (NO EDIT BUTTON ANYMORE) */
+function Field({ label }: any) {
+  return (
+    <div>
+      <label className="text-sm text-gray-600 mb-2 block font-medium">
+        {label}
+      </label>
+      <input
+        disabled
+        placeholder="Your First Name"
+        className="w-full px-4 py-3 rounded-lg text-sm border bg-gray-100 border-gray-200 text-gray-500"
+      />
+    </div>
+  )
+}
+
+/* MODAL INPUT */
+function InputModal({ label, placeholder, error }: any) {
+  return (
+    <div>
+      <label className="block text-xs text-gray-500 mb-1">
+        {label}
+      </label>
+
+      <input
+        placeholder={placeholder}
+        className={`
+          w-full px-4 py-2.5 rounded-md text-sm border
+          ${error
+            ? "border-red-400 focus:ring-red-400"
+            : "border-gray-300 focus:ring-[#1f4f6e]"}
+          focus:outline-none focus:ring-2
+        `}
+      />
+    </div>
+  )
 }
