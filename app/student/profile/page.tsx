@@ -9,18 +9,18 @@ export default function StudentProfile() {
   const [showParentModal, setShowParentModal] = useState(false)
 
   return (
-    <div className="p-8 bg-[#f5f7fb] min-h-screen">
+    <div className="bg-[#f5f7fb] min-h-screen">
 
       {/* PROFILE CARD */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white flex flex-col rounded-xl shadow-sm overflow-hidden">
 
         {/* GRADIENT */}
-        <div className="h-[120px] bg-gradient-to-r from-blue-500 via-purple-600 to-blue-400" />
+        <div className="h-30 bg-linear-to-r from-blue-500 via-purple-600 to-blue-400" />
 
-        <div className="px-8 pb-10">
+        <div className="px-10 py-5 flex flex-col gap-5">
 
           {/* TOP SECTION */}
-          <div className="flex items-end justify-between -mt-14 mb-8">
+          <div className="flex flex-col items-end gap-5 justify-between md:flex-row md:items-center">
 
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow">
@@ -54,12 +54,7 @@ export default function StudentProfile() {
           </div>
 
           {/* DIVIDER */}
-          <div className="border-t pt-6">
-
-            <h3 className="font-semibold text-gray-800 mb-6">
-              Personal Information
-            </h3>
-
+          <div>
             {/* GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
