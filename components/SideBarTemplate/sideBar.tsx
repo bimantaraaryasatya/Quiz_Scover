@@ -214,10 +214,10 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
               <img src={ProfilePicTest.src} alt="Profile" className="w-10 h-10 rounded-full" />
               <div className="leading-tight hidden md:block">
                 <p className="font-bold text-sm text-gray-800">
-                  {name}
+                  {name || "User Name"}
                 </p>
                 <p className="font-medium text-xs text-gray-500">
-                  {admin?.role}
+                  {admin?.role || "Role"}
                 </p>
               </div>
             </div>
