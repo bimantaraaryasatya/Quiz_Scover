@@ -153,7 +153,7 @@ export default function Login() {
                             </div>
 
                             <div>
-                                <button type="submit" className="bg-primary text-white font-semibold w-full px-4 py-3 rounded-md hover:opacity-90 transition">
+                                <button type="submit" className="bg-primary text-white font-semibold w-full px-4 py-3 rounded-md hover:opacity-90 transition cursor-pointer">
                                     Login
                                 </button>
                             </div>

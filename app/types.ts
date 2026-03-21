@@ -20,7 +20,7 @@ export enum Difficulty {
     EASY = "EASY"
 }
 
-export interface Admin {
+export interface IAdmin {
     idAdmin: number
     uuid: string
     username: string
@@ -32,7 +32,7 @@ export interface Admin {
     updated_at: Date
 }
 
-export interface User {
+export interface IUser {
     idUser: number
     uuid: string
     userName: string
@@ -61,7 +61,7 @@ export interface Classes {
     created_at: Date
     updated_at: Date
 
-    user?: User[]
+    user?: IUser[]
     subjectClass?: SubjectClass[]
 }
 
@@ -120,7 +120,7 @@ export interface Attempt {
 
     created_at: Date
 
-    user?: User
+    user?: IUser
     quiz?: Quiz
 }
 
@@ -141,7 +141,7 @@ export interface Scores {
     userId: number
     quizId: number
 
-    user?: User
+    user?: IUser
     quiz?: Quiz
 }
 
@@ -157,7 +157,7 @@ export interface Answers {
     optionsId: number
 
     quiz?: Quiz
-    user?: User
+    user?: IUser
     questions?: Questions
     options?: Options
 }
