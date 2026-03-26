@@ -8,7 +8,7 @@ import { FiEdit } from "react-icons/fi"
 import { FiTrash2 } from "react-icons/fi"
 import { IoIosArrowDown } from "react-icons/io";
 
-export default function AdminUser() {
+export default function AdminQuiz() {
     const [grade, setGrade] = useState("")
     const [subject, setSubject] = useState("")
     const [difficulty, setDifficuly] = useState("")

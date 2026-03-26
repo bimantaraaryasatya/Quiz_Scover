@@ -7,8 +7,8 @@ const Modal = ({children, isShow, onClose}: {children: ReactNode, isShow: boolea
         if (event.target === event.currentTarget) onClose(false)
     }
     return (
-        <div className={`w-full h-dvh z-1024 bg-slate-800 bg-opacity-90 fixed top-0 left-0 ${isShow ? `flex` : `hidden`} justify-center items-center`} onClick={handleClickOutside}>
-            <div className="w-5/6 md:w-4/6 lg:w-3/6 overflow-auto max-h-full bg-white rounded-2xl text-start">
+        <div className={`w-full h-dvh z-1024 bg-black/30 backdrop-blur-sm fixed top-0 left-0 ${isShow ? `flex` : `hidden`} justify-center items-center`} onClick={handleClickOutside}>
+            <div className="w-5/6 md:w-4/6 lg:w-2/6 overflow-auto max-h-full bg-white rounded-2xl text-start">
                 {children}
             </div>
         </div>
