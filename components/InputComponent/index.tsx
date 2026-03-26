@@ -26,16 +26,10 @@ export const InputComponent = ({value, onChange, type, className, id, required, 
 export const InputGroupComponent = ({value, onChange, type, className, id, required, placeholder, children, label, onKeyUp, readOnly, min}: Props) => {
     return (
         <div className="w-full flex flex-col gap-1 my-2">
-            <label className="w-full flex flex-col justify-start items-start gap-1 bg-white border-black/10 rounded-lg border py-2 px-4">
-                <strong className="text-xs font-bold text-black/40">{label}{required == true ? <sup className="text-red-600"></sup> : <></>}</strong>
-                {
-                    children ?
-                        <div className="text-black/20">
-                            {children}
-                        </div> : <div className=""></div>
-                }
+            <label className="text-xs font-medium mb-1 text-gray-500">{label}{required == true ? <sup className="text-red-600"></sup> : <></>}</label>
+            <div className="w-full flex flex-col justify-start items-start gap-1 bg-white border-black/10 rounded-lg border py-2.5 px-4">
                 <input type={type} id={id} value={value ?? ""} onChange={e => onChange(e.target.value)} min={min} className={`text-sm font-medium text-black/80 placeholder:text-black/20 w-full rounded-r-md bg-white focus:outline-none ${className}`} required={required ? required : false} placeholder={placeholder || ""} readOnly={readOnly ? readOnly : false} onKeyUp={e => {if(onKeyUp) onKeyUp(e)}}/>
-            </label>
+            </div>
         </div>
     )
 }

@@ -8,7 +8,7 @@ import { FiEdit } from "react-icons/fi"
 import { FiTrash2 } from "react-icons/fi"
 import { IoIosArrowDown } from "react-icons/io";
 
-export default function AdminUser() {
+export default function AdminSubject() {
     const [search, setSearch] = useState("")
 
     return (

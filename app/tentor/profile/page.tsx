@@ -3,24 +3,24 @@
 import Image from "next/image"
 import { useState } from "react"
 
-export default function TentorProfile() {
+export default function StudentProfile() {
 
   const [showUserModal, setShowUserModal] = useState(false)
   const [showParentModal, setShowParentModal] = useState(false)
 
   return (
-    <div className="p-8 bg-[#f5f7fb] min-h-screen">
+    <div className="bg-[#f5f7fb] min-h-screen">
 
       {/* PROFILE CARD */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white flex flex-col rounded-xl shadow-sm overflow-hidden">
 
         {/* GRADIENT */}
-        <div className="h-[120px] bg-gradient-to-r from-blue-500 via-purple-600 to-blue-400" />
+        <div className="h-30 bg-linear-to-r from-blue-500 via-purple-600 to-blue-400" />
 
-        <div className="px-8 pb-10">
+        <div className="px-10 py-5 flex flex-col gap-5">
 
-          {/* TOP SECTION (FIXED POSITION) */}
-          <div className="flex items-center justify-between -mt-12 mb-6">
+          {/* TOP SECTION */}
+          <div className="flex flex-col items-end gap-5 justify-between md:flex-row md:items-center">
 
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow">
@@ -34,19 +34,19 @@ export default function TentorProfile() {
 
               <div>
                 <h2 className="font-semibold text-gray-800 text-lg">
-                  Misca Alexandra
+                  Alice Smith
                 </h2>
 
                 <p className="text-sm text-gray-500 mt-2">
-                  miscascover@gmail.com
+                  alice.smith@student.com
                 </p>
               </div>
             </div>
 
-            {/* EDIT BUTTON (FIXED POSITION) */}
+            {/* ONLY EDIT BUTTON */}
             <button
               onClick={() => setShowUserModal(true)}
-              className="bg-[#1f4f6e] hover:bg-[#183e55] text-white px-5 py-2 rounded-md text-sm mt-4"
+              className="bg-[#1f4f6e] hover:bg-[#183e55] text-white px-5 py-2 rounded-md text-sm"
             >
               Edit
             </button>
@@ -54,12 +54,8 @@ export default function TentorProfile() {
           </div>
 
           {/* DIVIDER */}
-          <div className="border-t pt-6">
-
-            <h3 className="font-semibold text-gray-800 mb-6">
-              Personal Information
-            </h3>
-
+          <div>
+            {/* GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
               <Field label="Username" />
@@ -133,7 +129,7 @@ export default function TentorProfile() {
 
             <div className="mb-5">
               <h2 className="text-lg font-semibold text-gray-800">
-                Update User’s Parent Information
+                Update User Parent Information
               </h2>
               <p className="text-xs text-blue-500 text-right mt-1">
                 Step 2 of 2
@@ -145,9 +141,7 @@ export default function TentorProfile() {
             </div>
 
             <div className="space-y-4">
-              {/* ✅ NEW EMAIL FIELD */}
               <InputModal label="Email" placeholder="Input Email" />
-
               <InputModal label="Phone Number" placeholder="8023456789" />
             </div>
 
@@ -178,7 +172,7 @@ export default function TentorProfile() {
   )
 }
 
-/* FIELD */
+/* FIELD (NO EDIT BUTTON ANYMORE) */
 function Field({ label }: any) {
   return (
     <div>
@@ -194,7 +188,7 @@ function Field({ label }: any) {
   )
 }
 
-/* INPUT MODAL */
+/* MODAL INPUT */
 function InputModal({ label, placeholder, error }: any) {
   return (
     <div>

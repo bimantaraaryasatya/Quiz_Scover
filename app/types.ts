@@ -47,13 +47,13 @@ export interface IUser {
     created_at: Date
     updated_at: Date
 
-    class?: Classes
-    scores?: Scores[]
-    answers?: Answers[]
-    attempt?: Attempt[]
+    class?: IClasses
+    scores?: IScores[]
+    answers?: IAnswers[]
+    attempt?: IAttempt[]
 }
 
-export interface Classes {
+export interface IClasses {
     idClass: number
     uuid: string
     class_name: string
@@ -62,29 +62,29 @@ export interface Classes {
     updated_at: Date
 
     user?: IUser[]
-    subjectClass?: SubjectClass[]
+    subjectClass?: ISubjectClass[]
 }
 
-export interface Subject {
+export interface ISubject {
     idSubject: number
     uuid: string
     subject_name: string
     created_at: Date
     updated_at: Date
 
-    subjectClass?: SubjectClass[]
-    quiz?: Quiz[]
+    subjectClass?: ISubjectClass[]
+    quiz?: IQuiz[]
 }
 
-export interface SubjectClass {
+export interface ISubjectClass {
     subjectId: number
     classId: number
 
-    subject?: Subject
-    class?: Classes
+    subject?: ISubject
+    class?: IClasses
 }
 
-export interface Quiz {
+export interface IQuiz {
     idQuiz: number
     uuid: string
     quiz_title: string
@@ -101,15 +101,15 @@ export interface Quiz {
     created_at: Date
     updated_at: Date
 
-    subject?: Subject
+    subject?: ISubject
 
-    scores?: Scores[]
-    answers?: Answers[]
-    questions?: Questions[]
-    attempt?: Attempt[]
+    scores?: IScores[]
+    answers?: IAnswers[]
+    questions?: IQuestions[]
+    attempt?: IAttempt[]
 }
 
-export interface Attempt {
+export interface IAttempt {
     idAttempt: number
     userId: number
     quizId: number
@@ -121,10 +121,10 @@ export interface Attempt {
     created_at: Date
 
     user?: IUser
-    quiz?: Quiz
+    quiz?: IQuiz
 }
 
-export interface Scores {
+export interface IScores {
     idScore: number
     uuid: string
     total_questions: number
@@ -142,10 +142,10 @@ export interface Scores {
     quizId: number
 
     user?: IUser
-    quiz?: Quiz
+    quiz?: IQuiz
 }
 
-export interface Answers {
+export interface IAnswers {
     idAnswers: number
     uuid: string
     student_answer: string
@@ -156,13 +156,13 @@ export interface Answers {
     questionsId: number
     optionsId: number
 
-    quiz?: Quiz
+    quiz?: IQuiz
     user?: IUser
-    questions?: Questions
-    options?: Options
+    questions?: IQuestions
+    options?: IOptions
 }
 
-export interface Questions {
+export interface IQuestions {
     idQuestion: number
     uuid: string
     question_text: string
@@ -172,12 +172,12 @@ export interface Questions {
 
     quizId: number
 
-    quiz?: Quiz
-    options?: Options[]
-    answers?: Answers[]
+    quiz?: IQuiz
+    options?: IOptions[]
+    answers?: IAnswers[]
 }
 
-export interface Options {
+export interface IOptions {
     idOption: number
     uuid: string
     option_text: string
@@ -186,6 +186,6 @@ export interface Options {
 
     questionsId: number
 
-    questions?: Questions
-    answers?: Answers[]
+    questions?: IQuestions
+    answers?: IAnswers[]
 }

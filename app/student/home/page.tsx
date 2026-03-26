@@ -4,7 +4,7 @@ import { useState } from "react"
 import { CiSearch } from "react-icons/ci"
 import { FiTrendingUp, FiCalendar, FiAward } from "react-icons/fi"
 
-export default function TentorHome() {
+export default function StudentHome() {
 
     const [search, setSearch] = useState("")
 
