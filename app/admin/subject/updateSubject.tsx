@@ -1,30 +1,31 @@
 "use client"
 
-import { IClasses } from "@/app/types"
+import { ISubject } from "@/app/types"
 import { BASE_API_URL } from "@/global"
-import { drop } from "@/lib/api-bridge"
+import { put } from "@/lib/api-bridge"
 import { getCookie } from "@/lib/client-cookies"
 import { FormEvent, useRef, useState } from "react"
 import { toast } from "react-toastify"
-import { FiTrash2 } from "react-icons/fi"
+import { FiEdit } from "react-icons/fi"
 import { IoMdClose } from "react-icons/io"
 import { MainButton, SecondButton } from "@/components/ButtonComponent"
+import { InputGroupComponent } from "@/components/InputComponent"
 import Modal from "@/components/ModalComponent"
 
 type Props = {
-    data: IClasses
+    data: ISubject
     onSuccess: () => void
 }
 
-const DeleteClass = ({ data, onSuccess }: Props) => {
+const UpdateSubject = ({ data, onSuccess }: Props) => {
     const [isShow, setIsShow] = useState(false)
-    const [classes, setclasses] = useState<IClasses>(data)
+    const [subject, setSubject] = useState<ISubject>(data)
 
     const TOKEN = getCookie("token") || ""
     const formRef = useRef<HTMLFormElement>(null)
 
     const openModal = () => {
-        setclasses(data) 
+        setSubject(data) 
         setIsShow(true)
     }
 
@@ -32,13 +33,18 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
         try {
             e.preventDefault()
 
-            const url = `${BASE_API_URL}/class/delete/${classes.idClass}`
-            const { data: res } = await drop(url, TOKEN)
+            const url = `${BASE_API_URL}/subject/update-data/${subject.idSubject}`
+
+            const payload: any = {
+                subject_name: subject.subject_name
+            }
+
+            const { data: res } = await put(url, payload, TOKEN)
 
             if (!res?.status) {
                 toast(res?.message, {
                     hideProgressBar: true,
-                    containerId: "toastClass",
+                    containerId: "toastSubject",
                     type: "warning",
                     autoClose: 2000
                 })
@@ -49,7 +55,7 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
 
             toast(res?.message, {
                 hideProgressBar: true,
-                containerId: "toastClass",
+                containerId: "toastSubject",
                 type: "success",
                 autoClose: 2000
             })
@@ -63,7 +69,7 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
 
             toast(message, {
                 hideProgressBar: true,
-                containerId: "toastClass",
+                containerId: "toastSubject",
                 type: "error",
                 autoClose: 2000
             })
@@ -73,8 +79,11 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
     return (
         <div>
             {/* BUTTON EDIT */}
-            <button className="border border-red-500 text-red-500 px-4 py-2 rounded-lg hover:bg-red-50 hover:cursor-pointer transition" onClick={openModal}>
-                <FiTrash2 />
+            <button
+                onClick={openModal}
+                className="border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 transition hover:cursor-pointer"
+            >
+                <FiEdit />
             </button>
 
             <Modal isShow={isShow} onClose={(state) => setIsShow(state)}>
@@ -84,8 +93,8 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
                     <div className="pb-5">
                         <div className="w-full flex items-center">
                             <div className="flex flex-col">
-                                <strong className="text-2xl">Delete Class</strong>
-                                <small className="text-slate-400">Delete class data</small>
+                                <strong className="text-2xl">Update Subject</strong>
+                                <small className="text-slate-400">Edit subject data</small>
                             </div>
                             <div className="ml-auto">
                                 <button type="button" onClick={() => setIsShow(false)}>
@@ -97,7 +106,16 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
 
                     {/* BODY */}
                     <div>
-                        Are you sure you want to delete class {classes.class_name}
+                        <InputGroupComponent
+                            id="subject_name"
+                            type="text"
+                            label="Subject Name"
+                            value={subject.subject_name}
+                            onChange={(val) =>
+                                setSubject({ ...subject, subject_name: val })
+                            }
+                            required
+                        />
                     </div>
 
                     {/* FOOTER */}
@@ -110,7 +128,7 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
                                 Cancel
                             </SecondButton>
                             <MainButton type="submit">
-                                Delete
+                                Update
                             </MainButton>
                         </div>
                     </div>
@@ -121,4 +139,4 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
     )
 }
 
-export default DeleteClass
+export default UpdateSubject

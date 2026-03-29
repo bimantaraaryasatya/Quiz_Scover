@@ -12,7 +12,7 @@ import { IoMdClose } from "react-icons/io"
 import { MainButton, SecondButton } from "@/components/ButtonComponent"
 import { InputGroupComponent } from "@/components/InputComponent"
 import Modal from "@/components/ModalComponent"
-import Select from "@/components/SelectComponent"
+import { Select } from "@/components/SelectComponent"
 
 type Props = {
     data: IClasses

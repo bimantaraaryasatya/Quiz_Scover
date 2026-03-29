@@ -1,57 +1,78 @@
 "use client"
 
-import { IClasses, ClassProgram } from "@/app/types"
+import { useRef, useState, FormEvent, useEffect } from "react"
 import { BASE_API_URL } from "@/global"
-import { post } from "@/lib/api-bridge"
+import { get, post } from "@/lib/api-bridge"
 import { getCookie } from "@/lib/client-cookies"
-import { FormEvent, useRef, useState } from "react"
 import { toast } from "react-toastify"
 import { FaPlus } from "react-icons/fa"
 import { IoMdClose } from "react-icons/io"
-
 import { MainButton, SecondButton } from "@/components/ButtonComponent"
 import { InputGroupComponent } from "@/components/InputComponent"
 import Modal from "@/components/ModalComponent"
-import { Select } from "@/components/SelectComponent"
+import { MultiSelect } from "@/components/SelectComponent"
 
-const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
+type ClassOption = {
+    label: string
+    value: number
+}
+
+const AddSubject = ({ onSuccess }: { onSuccess: () => void }) => {
     const [isShow, setIsShow] = useState(false)
-    const [kelas, setKelas] = useState<IClasses>({
-        idClass: 0,
-        uuid: "",
-        class_name: "",
-        class_program: null,
-        created_at: new Date(),
-        updated_at: new Date()
-    })
+    const [subjectName, setSubjectName] = useState("")
+    const [selectedClasses, setSelectedClasses] = useState<number[]>([])
+    const [classOptions, setClassOptions] = useState<ClassOption[]>([])
 
     const TOKEN = getCookie("token") || ""
     const formRef = useRef<HTMLFormElement>(null)
 
     const openModal = () => {
-        setKelas({
-            idClass: 0,
-            uuid: "",
-            class_name: "",
-            class_program: null,
-            created_at: new Date(),
-            updated_at: new Date()
-        })
+        setSubjectName("")
+        setSelectedClasses([])
         setIsShow(true)
         if (formRef.current) formRef.current.reset()
     }
+
+    const fetchClasses = async () => {
+        try {
+            const token = getCookie("token")
+            const url = `${BASE_API_URL}/class/allData`
+            const { data } = await get(url, token)
+
+            if (data.status) {
+                const mapped = data.data.map((cls: any) => ({
+                    label: cls.class_name,
+                    value: cls.idClass
+                }))
+                setClassOptions(mapped)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        if (isShow) fetchClasses()
+    }, [isShow])
 
     const handleSubmit = async (e: FormEvent) => {
         try {
             e.preventDefault()
 
-            const url = `${BASE_API_URL}/class/create`
-            const payload: any = {
-                class_name: kelas.class_name
+            if (selectedClasses.length === 0) {
+                toast("Select at least 1 class!", {
+                    type: "warning",
+                    containerId: "toastSubject",
+                    autoClose: 2000
+                })
+                return
             }
 
-            if (kelas.class_program) {
-                payload.class_program = kelas.class_program
+            const url = `${BASE_API_URL}/subject/create`
+
+            const payload = {
+                subject_name: subjectName,
+                classId: selectedClasses
             }
 
             const { data } = await post(url, payload, TOKEN)
@@ -59,7 +80,7 @@ const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
             if (!data?.status) {
                 toast(data?.message, {
                     hideProgressBar: true,
-                    containerId: "toastClass",
+                    containerId: "toastSubject",
                     type: "warning",
                     autoClose: 2000
                 })
@@ -67,9 +88,10 @@ const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
             }
 
             setIsShow(false)
+
             toast(data?.message, {
                 hideProgressBar: true,
-                containerId: "toastClass",
+                containerId: "toastSubject",
                 type: "success",
                 autoClose: 2000
             })
@@ -78,9 +100,10 @@ const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
         } catch (error: any) {
             console.log(error)
             const message = error?.response?.data?.message || "Something went wrong"
+
             toast(message, {
                 hideProgressBar: true,
-                containerId: "toastClass",
+                containerId: "toastSubject",
                 type: "error",
                 autoClose: 2000
             })
@@ -92,7 +115,7 @@ const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
             <MainButton type="button" onClick={openModal}>
                 <div className="flex items-center gap-2">
                     <FaPlus />
-                    Add Class
+                    Add Subject
                 </div>
             </MainButton>
 
@@ -103,8 +126,8 @@ const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
                     <div className="sticky top-0 bg-white pb-5">
                         <div className="w-full flex items-center">
                             <div className="flex flex-col">
-                                <strong className="text-2xl">Create Class</strong>
-                                <small className="text-slate-400">Add new class data</small>
+                                <strong className="text-2xl">Create Subject</strong>
+                                <small className="text-slate-400">Add new subject</small>
                             </div>
                             <div className="ml-auto">
                                 <button type="button" onClick={() => setIsShow(false)}>
@@ -117,29 +140,22 @@ const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
                     {/* BODY */}
                     <div>
                         <InputGroupComponent
-                            id="class_name"
+                            id="subject_name"
                             type="text"
-                            label="Class Name"
-                            value={kelas.class_name}
-                            onChange={(val) => setKelas({ ...kelas, class_name: val })}
+                            label="Subject Name"
+                            value={subjectName}
+                            onChange={(val) => setSubjectName(val)}
                             required
                         />
 
-                        <Select
-                            id="class_program"
-                            label="Program"
-                            value={kelas.class_program ?? ""}
-                            onChange={(val: any) =>
-                                setKelas({
-                                    ...kelas,
-                                    class_program: val === "" ? null : (val as ClassProgram)
-                                })
-                            }
-                        >
-                            <option value="">--- Select Program ---</option>
-                            <option value="UTBK">UTBK</option>
-                            <option value="SKD">SKD</option>
-                        </Select>
+                        <MultiSelect
+                            id="class"
+                            label="Class"
+                            value={selectedClasses}
+                            onChange={setSelectedClasses}
+                            options={classOptions}
+                            required
+                        />
                     </div>
 
                     {/* FOOTER */}
@@ -160,4 +176,4 @@ const AddClass = ({ onSuccess }: { onSuccess: () => void }) => {
     )
 }
 
-export default AddClass
+export default AddSubject
