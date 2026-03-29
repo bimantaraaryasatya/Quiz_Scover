@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { CiSearch } from "react-icons/ci"
-import { FiEdit } from "react-icons/fi"
-import { FiTrash2 } from "react-icons/fi"
 import { IClasses } from "@/app/types"
 import { getCookie } from "@/lib/client-cookies"
 import { BASE_API_URL } from "@/global"

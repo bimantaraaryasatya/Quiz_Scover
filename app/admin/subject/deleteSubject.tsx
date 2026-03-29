@@ -1,6 +1,6 @@
 "use client"
 
-import { IClasses } from "@/app/types"
+import { ISubject } from "@/app/types"
 import { BASE_API_URL } from "@/global"
 import { drop } from "@/lib/api-bridge"
 import { getCookie } from "@/lib/client-cookies"
@@ -12,19 +12,19 @@ import { MainButton, SecondButton } from "@/components/ButtonComponent"
 import Modal from "@/components/ModalComponent"
 
 type Props = {
-    data: IClasses
+    data: ISubject
     onSuccess: () => void
 }
 
-const DeleteClass = ({ data, onSuccess }: Props) => {
+const DeleteSubject = ({ data, onSuccess }: Props) => {
     const [isShow, setIsShow] = useState(false)
-    const [classes, setclasses] = useState<IClasses>(data)
+    const [subject, setSubject] = useState<ISubject>(data)
 
     const TOKEN = getCookie("token") || ""
     const formRef = useRef<HTMLFormElement>(null)
 
     const openModal = () => {
-        setclasses(data) 
+        setSubject(data) 
         setIsShow(true)
     }
 
@@ -32,13 +32,13 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
         try {
             e.preventDefault()
 
-            const url = `${BASE_API_URL}/class/delete/${classes.idClass}`
+            const url = `${BASE_API_URL}/subject/delete-subject/${subject.idSubject}`
             const { data: res } = await drop(url, TOKEN)
 
             if (!res?.status) {
                 toast(res?.message, {
                     hideProgressBar: true,
-                    containerId: "toastClass",
+                    containerId: "toastSubject",
                     type: "warning",
                     autoClose: 2000
                 })
@@ -49,7 +49,7 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
 
             toast(res?.message, {
                 hideProgressBar: true,
-                containerId: "toastClass",
+                containerId: "toastSubject",
                 type: "success",
                 autoClose: 2000
             })
@@ -63,7 +63,7 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
 
             toast(message, {
                 hideProgressBar: true,
-                containerId: "toastClass",
+                containerId: "toastSubject",
                 type: "error",
                 autoClose: 2000
             })
@@ -84,8 +84,8 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
                     <div className="pb-5">
                         <div className="w-full flex items-center">
                             <div className="flex flex-col">
-                                <strong className="text-2xl">Delete Class</strong>
-                                <small className="text-slate-400">Delete class data</small>
+                                <strong className="text-2xl">Delete Subject</strong>
+                                <small className="text-slate-400">Delete subject data</small>
                             </div>
                             <div className="ml-auto">
                                 <button type="button" onClick={() => setIsShow(false)}>
@@ -97,7 +97,7 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
 
                     {/* BODY */}
                     <div>
-                        Are you sure you want to delete class {classes.class_name}
+                        Are you sure you want to delete subject <span className="font-semibold"> {subject.subject_name} </span>
                     </div>
 
                     {/* FOOTER */}
@@ -121,4 +121,4 @@ const DeleteClass = ({ data, onSuccess }: Props) => {
     )
 }
 
-export default DeleteClass
+export default DeleteSubject
