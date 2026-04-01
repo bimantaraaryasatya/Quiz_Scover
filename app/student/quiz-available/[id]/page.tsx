@@ -1,169 +1,103 @@
-'use client'
+"use client"
 
-import { useParams } from 'next/navigation';
+import { QuizDifficulty, DoneTag, DueTag, OverdueTag } from "@/components/BadgeTagComponent"
+import { MainButton } from "@/components/ButtonComponent"
 
 const QuizDetailPage = () => {
-    const params = useParams();
-    const quizId = params?.id;
-
-    // Data contoh untuk quiz
     const quizData = [
         {
             id: 1,
             title: "Mathematics",
             description: "Description...",
             duration: "65 Minutes",
-            status: "Hard",
+            difficulty: "Hard",
             statusType: "Overdue",
-            buttonText: "DO QUIZ",
-            buttonColor: "#0d47a1"
+            buttonText: "DO QUIZ"
         },
         {
             id: 2,
             title: "Mathematics",
             description: "Description...",
             score: 90,
-            status: "Hard",
+            difficulty: "Hard",
             statusType: "Done",
-            buttonText: "Review",
-            buttonColor: "#0d47a1"
+            buttonText: "Review"
         }
-    ];
+    ]
 
     return (
-        <div style={{
-            padding: "2rem",
-            backgroundColor: "#f9fafb",
-            minHeight: "100vh"
-        }}>
-            {/* Header */}
-            <div style={{
-                backgroundColor: "#1e5a96",
-                color: "white",
-                padding: "2rem",
-                borderRadius: "8px",
-                marginBottom: "2rem"
-            }}>
-                <h1 style={{
-                    fontSize: "1.875rem",
-                    fontWeight: "bold",
-                    margin: "0"
-                }}>
-                    Mathematics
-                </h1>
+        <div className="min-h-screen">
+
+            {/* HEADER */}
+            <div className="bg-linear-to-r from-blue-900 to-blue-500 text-white px-8 py-15 rounded-xl mb-8 shadow">
+                <h1 className="text-2xl font-bold">Mathematics</h1>
             </div>
 
-            {/* Quiz Cards Grid */}
-            <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                gap: "2rem"
-            }}>
+            {/* GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                 {quizData.map((quiz) => (
-                    <div key={quiz.id} style={{
-                        backgroundColor: "white",
-                        borderRadius: "12px",
-                        padding: "1.5rem",
-                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        height: "100%"
-                    }}>
-                        {/* Title */}
-                        <h3 style={{
-                            fontSize: "1.125rem",
-                            fontWeight: "bold",
-                            marginBottom: "0.5rem",
-                            color: "#1f2937"
-                        }}>
-                            {quiz.title}
-                        </h3>
+                    <div
+                        key={quiz.id}
+                        className="bg-white rounded-xl p-6 shadow-md flex flex-col justify-between items-start"
+                    >
 
-                        {/* Description */}
-                        <p style={{
-                            color: "#9ca3af",
-                            fontSize: "0.875rem",
-                            marginBottom: "1rem"
-                        }}>
-                            {quiz.description}
-                        </p>
+                        {/* LEFT */}
+                        <div className="flex flex-col gap-2">
 
-                        {/* Duration or Score */}
-                        {quiz.duration && (
-                            <p style={{
-                                fontSize: "0.875rem",
-                                color: "#0d47a1",
-                                fontWeight: "600",
-                                marginBottom: "1rem"
-                            }}>
-                                {quiz.duration}
+                            {/* TITLE + INFO */}
+                            <div className="flex items-center gap-4 justify-between w-full">
+                                <h3 className="font-bold text-gray-800">
+                                    {quiz.title}
+                                </h3>
+
+                                {quiz.duration && (
+                                    <span className="text-sm font-semibold text-primary">
+                                        {quiz.duration}
+                                    </span>
+                                )}
+
+                                {quiz.score !== undefined && (
+                                    <span className="text-sm font-semibold text-primary">
+                                        Score: {quiz.score}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                        
+                        <div className="flex flex-col gap-4 mt-2 w-full">
+                            {/* DESC */}
+                            <p className="text-sm text-gray-400">
+                                {quiz.description}
                             </p>
-                        )}
+                            <div className="flex flex-col md:flex-row justify-between gap-5 w-full items-start md:items-center">
+                                <div className="flex gap-2">
+                                    <QuizDifficulty>
+                                        {quiz.difficulty}
+                                    </QuizDifficulty>
 
-                        {quiz.score !== undefined && (
-                            <p style={{
-                                fontSize: "0.875rem",
-                                color: "#0d47a1",
-                                fontWeight: "600",
-                                marginBottom: "1rem"
-                            }}>
-                                Score: {quiz.score}
-                            </p>
-                        )}
+                                    {quiz.statusType === "Done" && (
+                                        <DoneTag>Done</DoneTag>
+                                    )}
 
-                        {/* Status Tags */}
-                        <div style={{
-                            display: "flex",
-                            gap: "0.5rem",
-                            marginBottom: "1.5rem",
-                            flexWrap: "wrap"
-                        }}>
-                            <span style={{
-                                backgroundColor: "#3b82f6",
-                                color: "white",
-                                padding: "0.25rem 0.75rem",
-                                borderRadius: "4px",
-                                fontSize: "0.75rem",
-                                fontWeight: "600"
-                            }}>
-                                {quiz.status}
-                            </span>
-                            <span style={{
-                                backgroundColor: quiz.statusType === "Overdue" ? "#ef4444" : "#10b981",
-                                color: "white",
-                                padding: "0.25rem 0.75rem",
-                                borderRadius: "4px",
-                                fontSize: "0.75rem",
-                                fontWeight: "600"
-                            }}>
-                                {quiz.statusType}
-                            </span>
+                                    {quiz.statusType === "Overdue" && (
+                                        <OverdueTag>Overdue</OverdueTag>
+                                    )}
+
+                                    {quiz.statusType === "Due" && (
+                                        <DueTag>Due</DueTag>
+                                    )}
+
+                                </div>
+                                <MainButton type="button" onClick={() => alert(`${quiz.buttonText} Clicked`)} className="w-full justify-center md:w-fit">
+                                    {quiz.buttonText}
+                                </MainButton>
+                            </div>
                         </div>
 
-                        {/* Button */}
-                        <button style={{
-                            backgroundColor: quiz.buttonColor,
-                            color: "white",
-                            padding: "0.75rem 1.5rem",
-                            borderRadius: "6px",
-                            border: "none",
-                            fontWeight: "600",
-                            fontSize: "0.875rem",
-                            cursor: "pointer",
-                            width: "100%",
-                            transition: "background-color 0.2s"
-                        }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor = "#0a3a7f";
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor = quiz.buttonColor;
-                            }}>
-                            {quiz.buttonText}
-                        </button>
                     </div>
                 ))}
+
             </div>
         </div>
     )
