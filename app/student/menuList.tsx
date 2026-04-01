@@ -37,6 +37,13 @@ let MenuList: IPropMenu[] = [
         category: "dashboard"
     },
     {
+        id: `quiz`,
+        path: `/student/quiz-detail`,
+        label: `Quiz Detail`,
+        icon: <MdOutlineQuiz/>,
+        category: "dashboard"
+    },
+    {
         id: `history`,
         path: `/student/history`,
         label: `History`,
