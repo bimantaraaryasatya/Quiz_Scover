@@ -3,8 +3,43 @@
 import Image from "next/image"
 import { MainButton } from "@/components/ButtonComponent"
 import Profile from "@/public/images/profile.jpeg"
+import { useState, useEffect } from "react"
+import { getCookie } from "@/lib/client-cookies"
+import { IAdmin } from "@/app/types"
+import { BASE_API_URL } from "@/global"
+import { get } from "@/lib/api-bridge"
 
 export default function AdminProfile() {
+    const [admin, setAdmin] = useState<IAdmin[]>([])
+    const [idAdmin, setIdAdmin] = useState(0)
+    const fetchAdmin = async () => {
+        try {
+            const token = getCookie("token")
+            const idAdmin = getCookie("id")
+            if (idAdmin) {
+                setIdAdmin(parseInt(idAdmin))
+            }
+            console.log("ID Admin:", idAdmin)
+            const url = `${BASE_API_URL}/admin/internal/get-admin/${idAdmin}`
+            const response = await get(url, token, {
+                "Content-Type": "application/json",
+            })
+
+            if (response.data.data) {
+                setAdmin([response.data.data])
+                console.log("DATA ADMIN:", response.data.data)
+            }else {
+                setAdmin([])
+            }
+        } catch (error) {
+            console.log(error)
+            setAdmin([])
+        }
+    }
+
+    useEffect(() => {
+        fetchAdmin()
+    }, [])
     return (
         <div className="flex flex-col gap-8">
 
@@ -30,21 +65,20 @@ export default function AdminProfile() {
                                 src={Profile}
                                 alt="Profile"
                                 fill
-                                className=""
                             />
                         </div>
                     </div>
 
                     <div className="flex flex-col xl:flex-row flex-1 gap-8 xl:gap-12">
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-5">
-                            <InfoItem label="Username" value="@Mhmdz" />
-                            <InfoItem label="Full Name" value="Abdul Mohammed" />
-                            <InfoItem label="Email" value="abdul@gmail.com" />
-                            <InfoItem label="Phone Number" value="+62 1122 890" />
-                            <InfoItem label="Role" value="Admin" />
-                            <InfoItem label="Created At" value="January, 2-3-2026" />
-                        </div>
+                            {admin.map((data, index) => (
+                                <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-5">
+                                    <InfoItem label="Username" value={data.username} />
+                                    <InfoItem label="Email" value={data.email} />
+                                    <InfoItem label="Phone Number" value={data.phone_number} />
+                                    <InfoItem label="Role" value={data.role} />
+                                    <InfoItem label="Admin ID" value={idAdmin} />
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>
@@ -52,7 +86,7 @@ export default function AdminProfile() {
     )
 }
 
-function InfoItem({ label, value }: { label: string; value: string }) {
+function InfoItem({ label, value }: { label: string; value: string | number }) {
     return (
         <div>
             <p className="text-sm text-gray-500">{label}</p>

@@ -6,33 +6,25 @@ const axiosInstance = axios.create({
     baseURL: BASE_API_URL
 })
 
-export const get = async (url: string, token?: string) => {
+export const get = async (
+    url: string,
+    token?: string,
+    customHeaders?: any
+) => {
     try {
-        let headers: any = {}
+        const result = await axiosInstance.get(url, {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+                ...customHeaders 
+            }
+        })
 
-        if (token) {
-            headers.Authorization = `Bearer ${token}`
-        }
-
-        const result = await axiosInstance.get(url, { headers })
-
+        return result
+    } catch (error: any) {
+        console.log("API ERROR:", error.message)
         return {
-            status: true,
-            data: result.data
-        }
-    } catch (error) {
-        const err = error as AxiosError<any>
-
-        const message =
-            err.response?.data?.message ??
-            err.message ??
-            "Something went wrong"
-
-        console.log("API ERROR:", message)
-
-        throw {
-            response: {
-                data: { message }
+            data: {
+                message: error.message
             }
         }
     }

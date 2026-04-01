@@ -43,7 +43,7 @@ export default function AdminClass() {
 
         return () => clearTimeout(t)
     }, [search])
-
+    
     return (
         <div className="bg-gray-50 min-h-screen">
             <ToastContainer containerId={'toastClass'} style={{ zIndex: 99999 }}/>

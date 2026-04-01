@@ -117,7 +117,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
           fixed md:sticky top-0 h-screen
           bg-white border-r border-[#E8E8E8]
           flex flex-col
-          transition-all duration-300 z-50
+          transition-all duration-300 z-100 
           ${isCollapsed ? "w-20" : "w-72"}
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
