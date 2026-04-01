@@ -78,7 +78,7 @@ export default function StudentQuizAvailable() {
             {filteredQuizzes.length === 0 && searchQuery && (
                 <div className="pt-12 text-center text-gray-400">
                     <p className="text-lg">
-                        Tidak ada quiz yang sesuai dengan pencarian "{searchQuery}"
+                        Quiz not found "{searchQuery}"
                     </p>
                 </div>
             )}

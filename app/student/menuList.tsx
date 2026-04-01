@@ -22,13 +22,6 @@ let MenuList: IPropMenu[] = [
         icon: <FiHome/>,
         category: "dashboard"
     },
-    // {
-    //     id: `daily-quiz`,
-    //     path: `/student/daily-quiz`,
-    //     label: `Daily Quiz`,
-    //     icon: <SlCalender/>,
-    //     category: "dashboard"
-    // },
     {
         id: `quiz-available`,
         path: `/student/quiz-available`,
@@ -36,6 +29,13 @@ let MenuList: IPropMenu[] = [
         icon: <MdOutlineQuiz/>,
         category: "dashboard"
     },
+    // {
+    //     id: `quiz`,
+    //     path: `/student/quiz-detail`,
+    //     label: `Quiz Detail`,
+    //     icon: <MdOutlineQuiz/>,
+    //     category: "dashboard"
+    // },
     {
         id: `history`,
         path: `/student/history`,
