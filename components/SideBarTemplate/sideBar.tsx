@@ -14,6 +14,7 @@ import { get } from "@/lib/api-bridge"
 import { BASE_API_URL } from "@/global"
 import { GiHamburgerMenu } from "react-icons/gi";
 import ProfilePicTest from "@/public/images/profile.jpeg"
+import { IAdmin } from "@/app/types";
 
 type MenuType = {
   id: string
@@ -33,8 +34,8 @@ type ManagerProp = {
 const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  // const [user, setUser] = useState<IUser | null>(null)
+  const [name, setName] = useState("")
+  const [admin, setAdmin] = useState<IAdmin | null>(null)
   // const [ownerKos, setOwnerKos] = useState<IKos | null>(null)
   const router = useRouter()
 
@@ -73,10 +74,11 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
   useEffect(() => {
     const TOKEN = getCookie("token")
     if (!TOKEN) return
-
+    const userName = getCookie("name")
+    if (userName) setName(userName)
     try {
-      // const decoded: IUser = jwtDecode(TOKEN)
-      // setUser(decoded)
+      const decoded: IAdmin = jwtDecode(TOKEN)
+      setAdmin(decoded)
     } catch (error) {
       console.error("Failed to decode token:", error)
     }
@@ -87,7 +89,6 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
     removeCookie("id")
     removeCookie("name")
     removeCookie("email")
-    removeCookie("phone")
     removeCookie("role")
 
     toast("Logout is successful", {
@@ -116,7 +117,7 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
           fixed md:sticky top-0 h-screen
           bg-white border-r border-[#E8E8E8]
           flex flex-col
-          transition-all duration-300 z-50
+          transition-all duration-300 z-100 
           ${isCollapsed ? "w-20" : "w-72"}
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
@@ -213,10 +214,10 @@ const Sidebar = ({ children, id, title, menuList }: ManagerProp) => {
               <img src={ProfilePicTest.src} alt="Profile" className="w-10 h-10 rounded-full" />
               <div className="leading-tight hidden md:block">
                 <p className="font-bold text-sm text-gray-800">
-                  Scover Admin
+                  {name || "User Name"}
                 </p>
                 <p className="font-medium text-xs text-gray-500">
-                  Super Admin
+                  {admin?.role || "Role"}
                 </p>
               </div>
             </div>

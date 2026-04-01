@@ -12,7 +12,7 @@ type Props = {
 
 export const MainButton = ({ children, type, onClick, className }: Props) => {
     return (
-        <button className={`text-sm bg-primary text-white rounded-md py-2 px-4 hover:bg-primary hover:cursor-pointer font-bold flex gap-2 items-center ${className}`} type={type} onClick={() => { if (onClick) onClick() }}>
+        <button className={`text-sm bg-primary text-white rounded-md py-2 px-4 hover:bg-primary hover:cursor-pointer flex gap-2 items-center ${className}`} type={type} onClick={() => { if (onClick) onClick() }}>
             {children}
         </button>
     )

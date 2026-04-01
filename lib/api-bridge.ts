@@ -6,15 +6,39 @@ const axiosInstance = axios.create({
     baseURL: BASE_API_URL
 })
 
-export const get = async (url: string, token?: string) => {
+export const get = async (
+    url: string,
+    token?: string,
+    customHeaders?: any
+) => {
     try {
-        let headers: any = {}
+        const result = await axiosInstance.get(url, {
+            headers: {
+                Authorization: token ? `Bearer ${token}` : "",
+                ...customHeaders 
+            }
+        })
+
+        return result
+    } catch (error: any) {
+        console.log("API ERROR:", error.message)
+        return {
+            data: {
+                message: error.message
+            }
+        }
+    }
+}
+
+export const post = async (url: string, data: any, token?: string) => {
+    try {
+        const headers: any = {}
 
         if (token) {
             headers.Authorization = `Bearer ${token}`
         }
 
-        const result = await axiosInstance.get(url, { headers })
+        const result = await axiosInstance.post(url, data, { headers })
 
         return {
             status: true,
@@ -38,17 +62,15 @@ export const get = async (url: string, token?: string) => {
     }
 }
 
-export const post = async (url: string, data: string | FormData, token: string) => {
+export const put = async (url: string, data: any, token?: string) => {
     try {
-        const typed: string = (typeof data == 'string') ? "application/json" : "multipart/form-data"
-        let headers: any = {
-            "Authorization": `Bearer ${token}` || '',
-            "Content-Type": typed
+        const headers: any = {}
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`
         }
 
-        let result = await axiosInstance.post(url, data, {
-            headers
-        })
+        const result = await axiosInstance.put(url, data, { headers })
 
         return {
             status: true,
@@ -66,42 +88,7 @@ export const post = async (url: string, data: string | FormData, token: string) 
 
         throw {
             response: {
-                data: {
-                    message
-                }
-            }
-        }
-    }
-}
-
-export const put = async (url: string, data: string | FormData, token: string) => {
-    try {
-        const type: string = (typeof data == 'string') ? "application/json" : "multipart/form-data"
-        let result = await axiosInstance.put(url, data, {
-            headers: {
-                "Authorization": `Bearer ${token}` || '',
-                "Content-Type": type
-            }
-        })
-        return {
-            status: true,
-            data: result.data
-        }
-    } catch (error) {
-        const err = error as AxiosError<any>
-
-        const message =
-            err.response?.data?.message ??
-            err.message ??
-            "Something went wrong"
-
-        console.log("API ERROR:", message)
-
-        throw {
-            response: {
-                data: {
-                    message
-                }
+                data: { message }
             }
         }
     }

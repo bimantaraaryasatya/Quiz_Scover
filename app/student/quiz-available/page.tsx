@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { CiSearch } from "react-icons/ci"
 
 const quizzes = [
     { id: 1, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "blue" },
@@ -12,25 +12,16 @@ const quizzes = [
     { id: 6, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "cyan" },
     { id: 7, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "green" },
     { id: 8, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "yellow" },
-    { id: 9, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "blue" },
-    { id: 10, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "cyan" },
-    { id: 11, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "green" },
-    { id: 12, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "yellow" },
-    { id: 13, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "blue" },
-    { id: 14, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "cyan" },
-    { id: 15, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "green" },
-    { id: 16, title: "Mathematics", description: "Description...", instructor: "Rudi Wicaksono", color: "yellow" },
 ];
 
 export default function StudentQuizAvailable() {
-    const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
 
     const colorMap: Record<string, string> = {
-        blue: "#3b82f6",
-        cyan: "#06b6d4",
-        green: "#10b981",
-        yellow: "#eab308",
+        blue: "border-blue-500",
+        cyan: "border-cyan-500",
+        green: "border-green-500",
+        yellow: "border-yellow-500",
     };
 
     const filteredQuizzes = quizzes.filter((quiz) =>
@@ -40,115 +31,57 @@ export default function StudentQuizAvailable() {
     );
 
     return (
-        <div style={{
-            padding: "2rem",
-            backgroundColor: "#f9fafb",
-            minHeight: "100vh"
-        }}>
-            <div style={{
-                marginBottom: "2rem"
-            }}>
-                <input
-                    type="text"
-                    placeholder="🔍 Cari quiz berdasarkan judul, deskripsi, atau instruktur..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                        width: "100%",
-                        maxWidth: "500px",
-                        padding: "0.75rem 1rem",
-                        fontSize: "1rem",
-                        border: "2px solid #e5e7eb",
-                        borderRadius: "8px",
-                        outline: "none",
-                        transition: "border-color 0.2s",
-                        boxSizing: "border-box"
-                    }}
-                    onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#3b82f6";
-                    }}
-                    onBlur={(e) => {
-                        e.currentTarget.style.borderColor = "#e5e7eb";
-                    }}
-                />
+        <div className="min-h-screen bg-gray-50">
+
+            {/* Search */}
+            <div className="mb-8">
+                <div className="relative w-full lg:w-96">
+                    <CiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"/>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
                 {searchQuery && (
-                    <p style={{
-                        marginTop: "0.5rem",
-                        fontSize: "0.875rem",
-                        color: "#6b7280"
-                    }}>
-                        Ditemukan {filteredQuizzes.length} quiz
+                    <p className="mt-2 text-sm text-gray-500">
+                        {filteredQuizzes.length} quiz founded
                     </p>
                 )}
             </div>
-            <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                gap: "1.5rem"
-            }}>
+
+            {/* Grid */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {filteredQuizzes.map((quiz) => (
                     <div
                         key={quiz.id}
-                        onClick={() => router.push(`/student/quiz-available/${quiz.id}`)}
-                        style={{
-                            backgroundColor: "white",
-                            borderLeft: `5px solid ${colorMap[quiz.color as keyof typeof colorMap]}`,
-                            borderRadius: "8px",
-                            padding: "1.5rem",
-                            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
-                            transition: "transform 0.2s, box-shadow 0.2s",
-                            cursor: "pointer",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem"
-                        }}
-                        onMouseEnter={(e) => {
-                            const element = e.currentTarget as HTMLDivElement;
-                            element.style.transform = "translateY(-4px)";
-                            element.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.15)";
-                        }}
-                        onMouseLeave={(e) => {
-                            const element = e.currentTarget as HTMLDivElement;
-                            element.style.transform = "translateY(0)";
-                            element.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.1)";
-                        }}
+                        className={`bg-white rounded-lg p-6 shadow-sm border-l-[5px] ${colorMap[quiz.color]} transition transform hover:-translate-y-1 hover:shadow-lg cursor-pointer flex flex-col gap-2`}
                     >
-                        <h3 style={{
-                            margin: "0",
-                            fontSize: "1.25rem",
-                            fontWeight: "600",
-                            color: "#1f2937"
-                        }}>
+                        <h3 className="text-lg font-semibold text-gray-800">
                             {quiz.title}
                         </h3>
-                        <p style={{
-                            margin: "0",
-                            fontSize: "0.875rem",
-                            color: "#6b7280",
-                            lineHeight: "1.5"
-                        }}>
+
+                        <p className="text-sm text-gray-500 leading-relaxed">
                             {quiz.description}
                         </p>
-                        <p style={{
-                            margin: "0.5rem 0 0 0",
-                            fontSize: "0.85rem",
-                            color: "#9ca3af",
-                            fontWeight: "500"
-                        }}>
+
+                        <p className="mt-2 text-xs font-medium text-gray-400">
                             {quiz.instructor}
                         </p>
                     </div>
                 ))}
             </div>
+
+            {/* Empty state */}
             {filteredQuizzes.length === 0 && searchQuery && (
-                <div style={{
-                    textAlign: "center",
-                    paddingTop: "3rem",
-                    color: "#9ca3af"
-                }}>
-                    <p style={{ fontSize: "1.125rem" }}>Tidak ada quiz yang sesuai dengan pencarian "{searchQuery}"</p>
+                <div className="pt-12 text-center text-gray-400">
+                    <p className="text-lg">
+                        Quiz not found "{searchQuery}"
+                    </p>
                 </div>
             )}
         </div>
-    )
+    );
 }

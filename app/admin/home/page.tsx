@@ -5,9 +5,22 @@ import { FiCalendar } from "react-icons/fi"
 import Icon_Dashboard from "@/public/images/Icon_Dashboard.png"
 import Icon_Dashboard2 from "@/public/images/Icon_Dashboard2.png"
 import Icon_Dashboard3 from "@/public/images/Icon_Dashboard3.png"
+import { getCookie } from "@/lib/client-cookies"
 
 export default function AdminHome() {
   const [date, setDate] = useState("")
+  const [name, setName] = useState("")
+
+  useEffect(() => {
+    const token = getCookie("token")
+    if (!token) {
+      return
+    }
+    const userName = getCookie("name")
+    if (userName) {
+      setName(userName)
+    }
+  })
 
   const getGreeting = () => {
     const hour = new Date().getHours()
@@ -65,7 +78,7 @@ export default function AdminHome() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">{getGreeting()}, Admin</h1>
+        <h1 className="text-3xl font-bold">{getGreeting()}, {name}</h1>
         <p className="text-gray-500 flex gap-2 items-center"><FiCalendar /> {date}</p>
       </div>
 
