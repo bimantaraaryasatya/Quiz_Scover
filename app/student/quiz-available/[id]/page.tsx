@@ -1,9 +1,13 @@
 "use client"
 
+import { useRouter, useSearchParams } from "next/navigation"
 import { QuizDifficulty, DoneTag, DueTag, OverdueTag } from "@/components/BadgeTagComponent"
 import { MainButton } from "@/components/ButtonComponent"
 
 const QuizDetailPage = () => {
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const subject = searchParams.get("subject") || "Unknown Subject"
     const quizData = [
         {
             id: 1,
@@ -30,6 +34,7 @@ const QuizDetailPage = () => {
 
             {/* HEADER */}
             <div className="bg-linear-to-r from-blue-900 to-blue-500 text-white px-8 py-15 rounded-xl mb-8 shadow">
+                <p className="text-sm text-blue-100 mb-2">{subject}</p>
                 <h1 className="text-2xl font-bold">Mathematics</h1>
             </div>
 
@@ -64,7 +69,7 @@ const QuizDetailPage = () => {
                                 )}
                             </div>
                         </div>
-                        
+
                         <div className="flex flex-col gap-4 mt-2 w-full">
                             {/* DESC */}
                             <p className="text-sm text-gray-400">
@@ -89,7 +94,17 @@ const QuizDetailPage = () => {
                                     )}
 
                                 </div>
-                                <MainButton type="button" onClick={() => alert(`${quiz.buttonText} Clicked`)} className="w-full justify-center md:w-fit">
+                                <MainButton
+                                    type="button"
+                                    onClick={() => {
+                                        if (quiz.buttonText === "DO QUIZ") {
+                                            router.push(`/student/quiz-available/${quiz.id}/take?subject=${encodeURIComponent(subject)}`)
+                                        } else {
+                                            alert(`${quiz.buttonText} Clicked`)
+                                        }
+                                    }}
+                                    className="w-full justify-center md:w-fit"
+                                >
                                     {quiz.buttonText}
                                 </MainButton>
                             </div>
