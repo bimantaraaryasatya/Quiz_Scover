@@ -35,6 +35,7 @@ export interface IAdmin {
 export interface IUser {
     idUser: number
     uuid: string
+    photoProfile?: string
     userName: string
     password: string
     full_name: string

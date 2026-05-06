@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 import { IoMdClose } from "react-icons/io"
 import { MainButton, SecondButton } from "@/components/ButtonComponent"
 import { InputGroupComponent } from "@/components/InputComponent"
+import FileInput from "@/components/FileInput"
 import Modal from "@/components/ModalComponent"
 import { IUser, Role } from "@/app/types"
 import { Select } from "@/components/SelectComponent"
@@ -27,19 +28,19 @@ const UpdateUser = ({ data, onSuccess }: Props) => {
     const [isShow, setIsShow] = useState(false)
     const [classOptions, setClassOptions] = useState<ClassOption[]>([])
     const [user, setUser] = useState<IUser | null>(null)
+    const [file, setFile] = useState<File | null>(null)
 
     const TOKEN = getCookie("token") || ""
     const formRef = useRef<HTMLFormElement>(null)
 
-    // 🔥 buka modal + isi data
     const openModal = () => {
         if (data) {
             setUser(data)
+            setFile(null)
             setIsShow(true)
         }
     }
 
-    // 🔥 fetch class
     const fetchClasses = async () => {
         try {
             const url = `${BASE_API_URL}/class/allData`
@@ -61,7 +62,35 @@ const UpdateUser = ({ data, onSuccess }: Props) => {
         if (isShow) fetchClasses()
     }, [isShow])
 
-    // 🔥 submit update
+    const handleSubmitWithFile = async () => {
+        try {
+            if (!user || !file) return
+
+            const url = `${BASE_API_URL}/user/profile/${user.idUser}`
+
+            const formData = new FormData()
+            formData.append("photoProfile", file)
+
+            const response = await put(url, formData, TOKEN)
+
+            if (!response.data.status) {
+                toast(response.data.message, {
+                    type: "warning",
+                    containerId: "toastUser",
+                    autoClose: 2000
+                })
+                return
+            }
+
+        } catch (error) {
+            toast("Upload photo failed", {
+                type: "error",
+                containerId: "toastUser",
+                autoClose: 2000
+            })
+        }
+    }
+
     const handleSubmit = async (e: FormEvent) => {
         try {
             e.preventDefault()
@@ -85,16 +114,22 @@ const UpdateUser = ({ data, onSuccess }: Props) => {
             if (!data?.status) {
                 toast(data?.message, {
                     type: "warning",
-                    containerId: "toastUser"
+                    containerId: "toastUser",
+                    autoClose: 2000
                 })
                 return
+            }
+
+            if (file) {
+                await handleSubmitWithFile()
             }
 
             setIsShow(false)
 
             toast("User updated successfully", {
                 type: "success",
-                containerId: "toastUser"
+                containerId: "toastUser",
+                autoClose: 2000
             })
 
             onSuccess()
@@ -110,10 +145,12 @@ const UpdateUser = ({ data, onSuccess }: Props) => {
 
     return (
         <div>
-            <button onClick={openModal} className="border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 transition hover:cursor-pointer">
+            <button
+                onClick={openModal}
+                className="border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 transition"
+            >
                 <FiEdit />
             </button>
-            
 
             <Modal isShow={isShow} onClose={(state) => setIsShow(state)}>
                 {user && (
@@ -205,6 +242,22 @@ const UpdateUser = ({ data, onSuccess }: Props) => {
                                 value={user.parent_phone_number}
                                 onChange={(val) => setUser({ ...user, parent_phone_number: val })}
                             />
+
+                            {/* 🔥 FILE INPUT */}
+                            <FileInput
+                                label="Photo Profile"
+                                acceptTypes={["image/jpeg", "image/png", "image/jpg"]}
+                                onChange={f => setFile(f)}
+                                required={false}
+                            />
+
+                            {/* 🔥 PREVIEW */}
+                            {file && (
+                                <img
+                                    src={URL.createObjectURL(file)}
+                                    className="w-20 h-20 rounded-full mt-2 object-cover"
+                                />
+                            )}
                         </div>
 
                         {/* FOOTER */}

@@ -144,6 +144,7 @@ export default function AdminUser() {
                         <thead className="bg-gray-100 text-gray-600">
                             <tr>
                             <th className="px-6 py-4 text-left">ID</th>
+                            <th className="px-6 py-4 text-left">PHOTO</th>
                             <th className="px-6 py-4 text-left">FULL NAME</th>
                             <th className="px-6 py-4 text-left">USERNAME</th>
                             <th className="px-6 py-4 text-left">EMAIL</th>
@@ -160,6 +161,20 @@ export default function AdminUser() {
                             {users.map((data, index) => (
                             <tr key={index} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-6 py-4">{data.idUser}</td>
+                                <td className="px-4 py-4">
+                                    <img
+                                        src={
+                                            !data.photoProfile
+                                            ? `${BASE_API_URL}/public/user_image/user_profile.jpg`
+                                            : `${BASE_API_URL}/public/user_image/${data.photoProfile}`
+                                        }
+                                        alt="user"
+                                        className="w-12 h-12 object-cover rounded-full"
+                                        onError={(e) => {
+                                            e.currentTarget.src = `${BASE_API_URL}/public/user_image/user_profile.jpg`
+                                        }}
+                                    />
+                                </td>
                                 <td className="px-6 py-4">{data.full_name}</td>
                                 <td className="px-6 py-4">
                                 {data.userName}
